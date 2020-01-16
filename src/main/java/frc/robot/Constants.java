@@ -16,4 +16,32 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int X = 3;
+    public static final int Y = 4;
+    public static final int LEFT_BUMPER = 5;
+    public static final int RIGHT_BUMPER = 6;
+    public static final int BACK = 7;
+    public static final int START = 8;
+    public static final int LEFT_JOYSTICK_X = 0;
+	public static final int LEFT_JOYSTICK_Y = 1;
+    public static final int RIGHT_JOYSTICK_X = 4;
+    public static final int RIGHT_JOYSTICK_Y = 5;
+
+  // For example to map the left and right motors, you could define the
+  // following variables to use with your drivetrain subsystem.
+  // public static int leftMotor = 1;
+  // public static int rightMotor = 2;
+
+  // If you are using multiple modules, make sure to define both the port
+  // number and the module. For example you with a rangefinder:
+  // public static int rangefinderPort = 1;
+  // public static int rangefinderModule = 1;
+  //PWM PORTS
+  public static final int FRONT_RIGHT = 6;
+  public static final int BACK_RIGHT = 4;
+  public static final int FRONT_LEFT = 3;
+  public static final int BACK_LEFT = 2;
 }
+

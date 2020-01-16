@@ -8,10 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -42,6 +43,15 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    Joystick driver=new Joystick(0);
+    JoystickButton A=new JoystickButton(driver,1);
+    JoystickButton B=new JoystickButton(driver,2);
+    JoystickButton X=new JoystickButton(driver,3);
+    JoystickButton Y=new JoystickButton(driver,4);
+    JoystickButton LEFT_BUMPER=new JoystickButton(driver,5);
+    JoystickButton RIGHT_BUMPER=new JoystickButton(driver,6);
+    JoystickButton BACK=new JoystickButton(driver,7);
+    JoystickButton START=new JoystickButton(driver,8);
   }
 
 

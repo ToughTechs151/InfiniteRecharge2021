@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.*;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class DriveWithJoysticksCommand extends Command {
   public DriveWithJoysticksCommand() {

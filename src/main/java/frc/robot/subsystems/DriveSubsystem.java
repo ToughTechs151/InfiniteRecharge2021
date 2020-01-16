@@ -2,18 +2,17 @@ package frc.robot.subsystems;
 
 import frc.robot.*;
 import frc.robot.commands.DriveWithJoysticksCommand;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 
-public class DriveSubsystem extends Subsystem {
+public class DriveSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private Talon frontRight;
@@ -21,10 +20,10 @@ public class DriveSubsystem extends Subsystem {
   private Talon frontLeft;
   private Talon backLeft;
   public DriveSubsystem(){
-    frontRight = new Talon(RobotMap.FRONT_RIGHT);
-    backRight = new Talon(RobotMap.BACK_RIGHT);
-    frontLeft = new Talon(RobotMap.FRONT_LEFT);
-    backLeft = new Talon(RobotMap.BACK_LEFT);
+    frontRight = new Talon(Constants.FRONT_RIGHT);
+    backRight = new Talon(Constants.BACK_RIGHT);
+    frontLeft = new Talon(Constants.FRONT_LEFT);
+    backLeft = new Talon(Constants.BACK_LEFT);
       
     SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
     SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
@@ -45,16 +44,12 @@ public class DriveSubsystem extends Subsystem {
   }
 
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new DriveWithJoysticksCommand());
-  }
+  
   public void driveTank(OI oi) {
-    speedMultiplier = oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER) ? crawl : normal;
+    speedMultiplier = oi.getJoystick().getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
-    double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
-    double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
+    double throttle = deadzone(oi.getJoystick().getRawAxis(Constants.LEFT_JOYSTICK_Y));
+    double turn = deadzone(oi.getJoystick().getRawAxis(Constants.RIGHT_JOYSTICK_X));
     
     drive(throttle * speedMultiplier, turn * speedMultiplier );
 }
