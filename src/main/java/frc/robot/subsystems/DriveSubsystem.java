@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
@@ -35,25 +36,25 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
   private static double softwareDeadband = 0.05;
-  DifferentialDrive driveTrain = null;
-  double speedMultiplier=1.0;
-  double normal=1.0;
-  double crawl=.5;
-  public void drive(double x,double y){
-      driveTrain.tankDrive(x,y);
+  static DifferentialDrive driveTrain = null;
+  static double speedMultiplier = 1.0;
+  static double normal = 1.0;
+  static double crawl = .5;
+
+  public static void drive(double x, double y) {
+    driveTrain.tankDrive(x, y);
   }
 
-  @Override
-  
-  public void driveTank(OI oi) {
-    speedMultiplier = oi.getJoystick().getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
+  public void driveTank(Joystick oi) {
+    speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
-    double throttle = deadzone(oi.getJoystick().getRawAxis(Constants.LEFT_JOYSTICK_Y));
-    double turn = deadzone(oi.getJoystick().getRawAxis(Constants.RIGHT_JOYSTICK_X));
-    
-    drive(throttle * speedMultiplier, turn * speedMultiplier );
-}
-private double deadzone(double val) {
-  return Math.abs(val) > softwareDeadband ? val : 0;
+    double throttle = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
+    double turn = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
+
+    drive(throttle * speedMultiplier, turn * speedMultiplier);
+  }
+
+  private static double deadzone(double val) {
+    return Math.abs(val) > softwareDeadband ? val : 0;
 }
 }
