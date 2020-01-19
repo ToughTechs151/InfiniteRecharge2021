@@ -1,38 +1,39 @@
 package frc.robot.subsystems;
 
 import frc.robot.*;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
+//import edu.wpi.first.wpilibj.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * An example subsystem. 
  */
 
 public class DriveSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Talon frontRight;
-  private Talon backRight;
-  private Talon frontLeft;
-  private Talon backLeft;
+  private WPI_TalonSRX frontRight;
+  private WPI_TalonSRX backRight;
+  private WPI_TalonSRX frontLeft;
+  private WPI_TalonSRX backLeft;
   public DriveSubsystem(){
-    frontRight = new Talon(Constants.FRONT_RIGHT);
-    backRight = new Talon(Constants.BACK_RIGHT);
-    frontLeft = new Talon(Constants.FRONT_LEFT);
-    backLeft = new Talon(Constants.BACK_LEFT);
+    frontRight = new WPI_TalonSRX(Constants.RIGHT);
+    //backRight = new WPI_TalonSRX(Constants.BACK_RIGHT);
+    frontLeft = new WPI_TalonSRX(Constants.LEFT);
+    //backLeft = new WPI_TalonSRX(Constants.BACK_LEFT);
       
-    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
-    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
+    //SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
+    //SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
 
-    driveTrain = new DifferentialDrive(left, right);
+    driveTrain = new DifferentialDrive(frontLeft, frontRight);
 
-    left.setInverted(true);
-    right.setInverted(true);
+    frontLeft.setInverted(true);
+    frontRight.setInverted(true);
 
   }
   private static double softwareDeadband = 0.05;
