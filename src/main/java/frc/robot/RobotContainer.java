@@ -30,6 +30,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI);
+
+  private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
+  private final HopperCommand m_hopperCommand;
   
   
 
@@ -51,6 +54,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     JoystickButton A=new JoystickButton(driverOI,1);
+    A.whenPressed(new HopperCommand(HopperSubsystem, 2));
     JoystickButton B=new JoystickButton(driverOI,2);
     JoystickButton X=new JoystickButton(driverOI,3);
     JoystickButton Y=new JoystickButton(driverOI,4);
