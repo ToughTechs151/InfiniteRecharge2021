@@ -8,10 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.subsystems.HopperSubsystem;
 
 public class HopperCommand extends CommandBase {
   private double m_timeout;
+  private HopperSubsystem m_hopperSubsystem;
   /**
    * Creates a new HopperCommand.
    */
@@ -19,13 +20,13 @@ public class HopperCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_timeout = timeout;
     m_hopperSubsystem = subsystem;
-    addRequirements(m_hopperSubSystem);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    setTimeout(m_timeout);
+    withTimeout(m_timeout);
     m_hopperSubsystem.start();
   }
 
@@ -37,12 +38,12 @@ public class HopperCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_hopperSubSystem.stop();
+    m_hopperSubsystem.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isTimedOut();
+    return false;
   }
 }

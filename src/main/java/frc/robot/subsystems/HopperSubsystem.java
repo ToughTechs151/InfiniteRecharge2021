@@ -8,25 +8,28 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-private final WPI_TalonSRX hopperTurn;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class HopperSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  private final WPI_TalonSRX hopperTurn;
   
   public HopperSubsystem() {
-    hopperTurn = new WPI_TalonSRX();
+    hopperTurn = new WPI_TalonSRX(Constants.hopper);
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
   public void start() {
-    hopperTurn.setSpeed(1.0);
+    hopperTurn.set(1.0);
   }
   public void stop(){
-    hopperTurn.setSpeed(0);
+    hopperTurn.set(0);
   }
 }

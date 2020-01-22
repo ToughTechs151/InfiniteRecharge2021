@@ -48,5 +48,7 @@ public final class Constants {
   //CAN ports
   public static final int RIGHT = 2;
   public static final int LEFT = 3;
+
+  public static final int hopper = 4;
 }
 

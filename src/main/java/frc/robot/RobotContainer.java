@@ -10,9 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.DriveWithJoysticksCommand;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.HopperCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -25,14 +25,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   public final Joystick driverOI=new Joystick(0);
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI);
 
   private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
-  private final HopperCommand m_hopperCommand;
+  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0);
   
   
 
@@ -54,7 +52,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     JoystickButton A=new JoystickButton(driverOI,1);
-    A.whenPressed(new HopperCommand(HopperSubsystem, 2));
+    A.whenPressed(m_hopperCommand);
     JoystickButton B=new JoystickButton(driverOI,2);
     JoystickButton X=new JoystickButton(driverOI,3);
     JoystickButton Y=new JoystickButton(driverOI,4);
@@ -71,10 +69,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
-  }
+  }*/
   public Command getDriveCommand() {
     
     return m_DriveWithJoysticksCommand;
