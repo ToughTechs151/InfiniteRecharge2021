@@ -40,15 +40,12 @@ public final class Constants {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
   //PWM PORTS
-  public static final int FRONT_RIGHT = 0;
-  public static final int BACK_RIGHT = 4;
-  public static final int FRONT_LEFT = 1;
-  public static final int BACK_LEFT = 2;
+  public static final int FRONT_RIGHT = 1;
+  public static final int BACK_RIGHT = 2;
+  public static final int FRONT_LEFT = 4;
+  public static final int BACK_LEFT = 5;
 
-  //CAN ports
-  public static final int RIGHT = 2;
-  public static final int LEFT = 3;
-
+  //CAN IDs
   public static final int hopper = 4;
 }
 
