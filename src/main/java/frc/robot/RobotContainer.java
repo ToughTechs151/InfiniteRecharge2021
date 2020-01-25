@@ -13,8 +13,13 @@ import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,11 +28,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
   public final Joystick driverOI=new Joystick(0);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
+  private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
 
-  private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI);
+  private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
 
   private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
   private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0);
