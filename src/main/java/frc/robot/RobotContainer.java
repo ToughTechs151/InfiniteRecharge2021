@@ -28,14 +28,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  
+  // OI joysticks 
   public final Joystick driverOI=new Joystick(0);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
   private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
-
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
-
   private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
   private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0);
   

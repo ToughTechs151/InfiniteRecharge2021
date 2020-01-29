@@ -16,23 +16,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class DriveSubsystem extends SubsystemBase {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  // Drive motors
   private Talon frontRight;
   private Talon backRight;
   private Talon frontLeft;
   private Talon backLeft;
   public DriveSubsystem(){
+    //Assign drive motors
     frontRight = new Talon(Constants.FRONT_RIGHT);
     backRight = new Talon(Constants.BACK_RIGHT);
     frontLeft = new Talon(Constants.FRONT_LEFT);
     backLeft = new Talon(Constants.BACK_LEFT);
-      
+    //Group drive motors based on location  
     SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
     SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
 
     driveTrain = new DifferentialDrive(left, right);
-
+    //adjust for which side of the robot should be front.
     left.setInverted(true);
     right.setInverted(true);
 
@@ -48,24 +48,26 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveTank(Joystick oi) {
+    //check to see if the robot should drive slower
     speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
-    double throttle = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
-    double turn = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
+    double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
+    double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
     float Kp=-0.1f;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    //checks for input from drive to allign to target.
     if(oi.getRawButton(Constants.LEFT_BUMPER) ? true : false)
     if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0)==1){
       double heading_error = tx;
       double steering_adjust = Kp * tx;
 
-      throttle+=steering_adjust;
-      turn-=steering_adjust;
+      leftDrive+=steering_adjust;
+      rightDrive-=steering_adjust;
     }
 
-    drive(throttle * speedMultiplier, turn * speedMultiplier);
+    drive(leftDrive * speedMultiplier, rightDrive * speedMultiplier);
   }
-
+  //checks value against software deadband to avoid minor variations in joystick position
   private static double deadzone(double val) {
     return Math.abs(val) > softwareDeadband ? val : 0;
 }
