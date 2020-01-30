@@ -51,5 +51,13 @@ public final class Constants {
 
   //CAN IDs
   public static final int hopper = 4;
+  public static final int Launcher1 = 5;
+  public static final int Launcher2 = 6;
+
+  //Final Variables
+  public static final double Kp=1;
+  public static final double Ki=0.01;
+  public static final double Kd=0.1;
+
 }
 
