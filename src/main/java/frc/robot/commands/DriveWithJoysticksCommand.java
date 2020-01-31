@@ -9,11 +9,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveWithJoysticksCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_drive;
+  private final LimeLightSubsystem m_light;
   private final Joystick m_driver;
-  public DriveWithJoysticksCommand(DriveSubsystem drive,Joystick driver) {
+  //commands require a subsystem to connect to, and also any other relevant inputs
+  public DriveWithJoysticksCommand(DriveSubsystem drive,Joystick driver,LimeLightSubsystem light) {
     m_drive=drive;
     m_driver=driver;   
+    m_light=light;
     addRequirements(drive);
+    addRequirements(light);
   }
 
   // Called just before this Command runs the first time
@@ -25,6 +29,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
   @Override
   public void execute() {
     m_drive.driveTank(m_driver);
+    m_light.dashBoard();
   }
 
   // Make this return true when this Command no longer needs to run execute()

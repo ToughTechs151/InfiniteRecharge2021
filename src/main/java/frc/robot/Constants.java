@@ -16,6 +16,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final double PORT_HEIGHT=89.75;
+    public static final double ANGLE=0;
+    public static final double CAM_HEIGHT=28;
     //joystick ports
     public static final int A = 1;
     public static final int B = 2;
@@ -39,16 +43,23 @@ public final class Constants {
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
+
+  public static final int hSwitch=0;
   //PWM PORTS
-  public static final int FRONT_RIGHT = 0;
-  public static final int BACK_RIGHT = 4;
-  public static final int FRONT_LEFT = 1;
-  public static final int BACK_LEFT = 2;
+  public static final int FRONT_RIGHT = 2;
+  public static final int BACK_RIGHT = 3;
+  public static final int FRONT_LEFT = 4;
+  public static final int BACK_LEFT = 6;
 
-  //CAN ports
-  public static final int RIGHT = 2;
-  public static final int LEFT = 3;
+  //CAN IDs
+  public static final int hopper = 0;
+  public static final int Launcher1 = 7;
+  public static final int Launcher2 = 10;
 
-  public static final int hopper = 4;
+  //Final Variables
+  public static final double Kp=0.01;
+  public static final double Ki=0.001;
+  public static final double Kd=0.0000000000000001;
+
 }
 
