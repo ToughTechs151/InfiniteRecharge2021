@@ -42,17 +42,20 @@ public class LauncherSubsystem extends SubsystemBase {
   };
 
   public LauncherSubsystem() {
-
+    launcher.setInverted(true);
   }
   public void setSetpoint(double set){
     setpoint=set;
   }
 
   public void periodic() {
-    pid.getController().calculate(launcher.get(), setpoint);
+    run(pid.getController().calculate(launcher.get(), setpoint));
   }
 
   protected static void run(double output) {
+    if (setpoint==0){
+      output=setpoint;
+    }
     launcher.set(output);
 
   }

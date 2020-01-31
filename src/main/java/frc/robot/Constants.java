@@ -43,6 +43,8 @@ public final class Constants {
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
+
+  public static final int hSwitch=0;
   //PWM PORTS
   public static final int FRONT_RIGHT = 2;
   public static final int BACK_RIGHT = 3;
@@ -50,14 +52,14 @@ public final class Constants {
   public static final int BACK_LEFT = 6;
 
   //CAN IDs
-  public static final int hopper = 4;
-  public static final int Launcher1 = 5;
-  public static final int Launcher2 = 6;
+  public static final int hopper = 0;
+  public static final int Launcher1 = 7;
+  public static final int Launcher2 = 10;
 
   //Final Variables
-  public static final double Kp=1;
-  public static final double Ki=0.01;
-  public static final double Kd=0.1;
+  public static final double Kp=0.01;
+  public static final double Ki=0.001;
+  public static final double Kd=0.0000000000000001;
 
 }
 

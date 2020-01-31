@@ -33,13 +33,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
   // OI joysticks 
   public final Joystick driverOI=new Joystick(0);
-  public final Joystick coDriverOI=new Joystick(0);
+  public final Joystick coDriverOI=new Joystick(1);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
   private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
-  private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
-  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0);
+  public final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
+  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 0.35);
   
   public final static PIDController launcherPID = new PIDController(Constants.Kp, Constants.Ki, Constants.Kd);
   private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem();
@@ -59,13 +59,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton A = new JoystickButton(driverOI, 1);
-    A.whenPressed(m_hopperCommand);
+    JoystickButton Ac = new JoystickButton(coDriverOI, 1);
+    Ac.whenPressed(m_hopperCommand);
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
-    Bc.whenPressed(new ChangeLauncherSpeedCommand(2000,mLauncherSubsystem));
+    Bc.whenPressed(new ChangeLauncherSpeedCommand(0,mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(0, mLauncherSubsystem));
-    JoystickButton Y = new JoystickButton(driverOI, 4);
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(500, mLauncherSubsystem));
+    JoystickButton Yc = new JoystickButton(coDriverOI, 4);
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(1000, mLauncherSubsystem));
     JoystickButton LEFT_BUMPER = new JoystickButton(driverOI, 5);
     JoystickButton RIGHT_BUMPER = new JoystickButton(driverOI, 6);
     JoystickButton BACK = new JoystickButton(driverOI, 7);

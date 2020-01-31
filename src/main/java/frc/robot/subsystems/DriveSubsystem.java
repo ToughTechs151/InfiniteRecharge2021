@@ -33,8 +33,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     driveTrain = new DifferentialDrive(left, right);
     //adjust for which side of the robot should be front.
-    left.setInverted(true);
-    right.setInverted(true);
+    left.setInverted(false);
+    right.setInverted(false);
 
   }
   private static double softwareDeadband = 0.05;
