@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.AdjustLauncherCommand;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
@@ -23,6 +24,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -32,22 +34,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RobotContainer {
   // OI joysticks 
+  
   public final Joystick driverOI=new Joystick(0);
-  public final Joystick coDriverOI=new Joystick(1);
+  public final static Joystick coDriverOI=new Joystick(1);
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
   private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
   public final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
   private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 0.35);
+  private final HopperCommand mUnstuck=new HopperCommand(m_hopperSubsystem, -0.35);
   
   public final static PIDController launcherPID = new PIDController(Constants.Kp, Constants.Ki, Constants.Kd);
-  private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem();
+  private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
+    //Shuffleboard.addEventMarker("LauncherSpeed", EventImportance.kHigh);
     configureButtonBindings();
   }
 
@@ -60,15 +65,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     JoystickButton Ac = new JoystickButton(coDriverOI, 1);
-    Ac.whenPressed(m_hopperCommand);
+    Ac.whenPressed(new AdjustLauncherCommand(mLauncherSubsystem, m_LimeLightSubsystem));
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
     Bc.whenPressed(new ChangeLauncherSpeedCommand(0,mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(500, mLauncherSubsystem));
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(2000, mLauncherSubsystem));
     JoystickButton Yc = new JoystickButton(coDriverOI, 4);
-    Yc.whenPressed(new ChangeLauncherSpeedCommand(1000, mLauncherSubsystem));
-    JoystickButton LEFT_BUMPER = new JoystickButton(driverOI, 5);
-    JoystickButton RIGHT_BUMPER = new JoystickButton(driverOI, 6);
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(3100, mLauncherSubsystem));
+    JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
+    LEFT_BUMPERc.whenPressed(mUnstuck);
+    JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
+    RIGHT_BUMPERc.whenPressed(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
 

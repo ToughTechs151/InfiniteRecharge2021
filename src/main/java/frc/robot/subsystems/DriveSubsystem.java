@@ -28,13 +28,13 @@ public class DriveSubsystem extends SubsystemBase {
     frontLeft = new Talon(Constants.FRONT_LEFT);
     backLeft = new Talon(Constants.BACK_LEFT);
     //Group drive motors based on location  
-    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
-    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
+    SpeedControllerGroup left = new SpeedControllerGroup(frontRight, backRight);
+    SpeedControllerGroup right= new SpeedControllerGroup(frontLeft, backLeft);
 
     driveTrain = new DifferentialDrive(left, right);
     //adjust for which side of the robot should be front.
-    left.setInverted(false);
-    right.setInverted(false);
+    left.setInverted(true);
+    right.setInverted(true);
 
   }
   private static double softwareDeadband = 0.05;
@@ -53,7 +53,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
     double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
-    float Kp=-0.1f;
+    float Kp=-0.075f;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     //checks for input from drive to allign to target.
     if(oi.getRawButton(Constants.LEFT_BUMPER) ? true : false)
