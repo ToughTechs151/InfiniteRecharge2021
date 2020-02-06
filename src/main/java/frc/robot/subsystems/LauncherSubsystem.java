@@ -41,12 +41,13 @@ public class LauncherSubsystem extends PIDSubsystem {
   public void setSetpoint(double set){
     setpoint=set;
     if(set!=0){
-    try {
-      getController().setSetpoint(setpoint);
-    } catch (NullPointerException Exception) {
-      System.out.println("Exception: " + Exception);
-      //TODO: handle exception
-    }
+      try {
+        getController().setSetpoint(setpoint);
+      } 
+      catch (NullPointerException Exception) {
+        System.out.println("Exception: " + Exception);
+        //TODO: handle exception
+      }
     }
   }
 
@@ -55,6 +56,14 @@ public class LauncherSubsystem extends PIDSubsystem {
     useOutput(lEncoder.getVelocity(), setpoint);
     SmartDashboard.putNumber("LauncherSpeed in RPM", lEncoder.getVelocity());
     SmartDashboard.putNumber("Launcher Current", launcher1.getOutputCurrent());
+    //setSetpoint(SmartDashboard.getNumber("LauncherSetpoint in RPM", setpoint));
+    SmartDashboard.putNumber("LauncherSetpoint in RPM", setpoint);
+    /*getController().setP(SmartDashboard.getNumber("Kp", getController().getP()));
+    getController().setI(SmartDashboard.getNumber("Ki", getController().getI()));
+    getController().setD(SmartDashboard.getNumber("Kd", getController().getD()));
+    SmartDashboard.putNumber("Kp", getController().getP());
+    SmartDashboard.putNumber("Ki", getController().getI());
+    SmartDashboard.putNumber("Kd", getController().getD());*/
     SmartDashboard.putNumber("Launcher get",launcher1.get());
   }
 
@@ -67,11 +76,12 @@ public class LauncherSubsystem extends PIDSubsystem {
   }*/
 @Override
 protected void useOutput(double output, double setpoint) {
-  if(setpoint==0){
-    setpoint=getController().getSetpoint()*0.9;
+  if(setpoint == 0){
+    setpoint=(getController().getSetpoint()*0.9);
   }
   output=getController().calculate(output,setpoint)/lEncoder.getVelocityConversionFactor();
-  launcher.set(output);
+  launcher1.set(output*0.95);
+  launcher2.set(output);
 	
 }
 @Override

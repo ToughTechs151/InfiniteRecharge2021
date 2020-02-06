@@ -65,7 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
       rightDrive-=steering_adjust;
     }
 
-    drive(leftDrive * speedMultiplier, rightDrive * speedMultiplier);
+    drive((leftDrive/Math.abs(leftDrive))*Math.pow(leftDrive,2)* speedMultiplier, Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive))* speedMultiplier);
   }
   //checks value against software deadband to avoid minor variations in joystick position
   private static double deadzone(double val) {

@@ -42,8 +42,8 @@ public class RobotContainer {
   private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
   private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
   public final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
-  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 0.35);
-  private final HopperCommand mUnstuck=new HopperCommand(m_hopperSubsystem, -0.35);
+  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0);
+  private final HopperCommand mUnstuck=new HopperCommand(m_hopperSubsystem, -1.0);
   
   public final static PIDController launcherPID = new PIDController(Constants.Kp, Constants.Ki, Constants.Kd);
   private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
@@ -69,13 +69,13 @@ public class RobotContainer {
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
     Bc.whenPressed(new ChangeLauncherSpeedCommand(0,mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(2000, mLauncherSubsystem));
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(2800, mLauncherSubsystem));
     JoystickButton Yc = new JoystickButton(coDriverOI, 4);
-    Yc.whenPressed(new ChangeLauncherSpeedCommand(3100, mLauncherSubsystem));
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(2900, mLauncherSubsystem));
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
-    LEFT_BUMPERc.whenPressed(mUnstuck);
+    LEFT_BUMPERc.whenHeld(mUnstuck);
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-    RIGHT_BUMPERc.whenPressed(m_hopperCommand);
+    RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
 

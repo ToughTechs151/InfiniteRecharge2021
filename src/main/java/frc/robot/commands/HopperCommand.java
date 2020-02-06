@@ -21,7 +21,6 @@ public class HopperCommand extends CommandBase {
   /**
    * Creates a new HopperCommand.
    */
-  private Timer timer;
 
   private double speed;
   public HopperCommand(HopperSubsystem subsystem, double speed) {
@@ -31,34 +30,16 @@ public class HopperCommand extends CommandBase {
     addRequirements(subsystem);
   }
 
-  private boolean initialState;
-  private int increment;
-  private boolean lastState;
-  private boolean thisState;
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer = new Timer();
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        SmartDashboard.putString("Hopper status", "***Hopper Jammed***");
-      }
-    }, 750L);
-    initialState = m_hopperSubsystem.getHopperSwitchState();
-    lastState = m_hopperSubsystem.getHopperSwitchState();
-    increment = 0;
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    thisState = m_hopperSubsystem.getHopperSwitchState();
-    if(thisState != lastState) {
-      increment++;
-      lastState = thisState;
-    }
     m_hopperSubsystem.start(speed);
   }
 
@@ -66,16 +47,11 @@ public class HopperCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_hopperSubsystem.stop();
-    timer.cancel();
-    if(initialState)
-      increment = 1;
-    else
-      increment = 2;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (initialState && increment == 1) || (!initialState && increment == 2);
+    return false;
   }
 }

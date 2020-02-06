@@ -52,12 +52,12 @@ public final class Constants {
   public static final int BACK_LEFT = 6;
 
   //CAN IDs
-  public static final int hopper = 0;
+  public static final int hopper = 7;
   public static final int Launcher1 = 5;
   public static final int Launcher2 = 6;
 
   //Final Variables
-  public static final double Kp=0.0002;
+  public static final double Kp=0.0003;
   public static final double Ki=0.00028;
   public static final double Kd=0;
 
