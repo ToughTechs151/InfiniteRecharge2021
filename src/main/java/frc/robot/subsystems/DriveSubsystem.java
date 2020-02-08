@@ -43,7 +43,7 @@ public class DriveSubsystem extends SubsystemBase {
   static double normal = 1.0;
   static double crawl = .5;
 
-  public static void drive(double x, double y) {
+  public void drive(double x, double y) {
     driveTrain.tankDrive(x, y);
   }
 
