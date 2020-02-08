@@ -11,6 +11,7 @@ public class LimeLightSubsystem extends SubsystemBase{
     private NetworkTableEntry ty = table.getEntry("ty");
     private NetworkTableEntry tx = table.getEntry("tx");
     private NetworkTableEntry ta = table.getEntry("ta");
+    private double d;
 
     public LimeLightSubsystem(){
 
@@ -24,7 +25,7 @@ public class LimeLightSubsystem extends SubsystemBase{
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
         double tan = Math.tan((y+Constants.ANGLE)*Math.PI/180);
-        double d=Math.abs((Constants.PORT_HEIGHT-Constants.CAM_HEIGHT)/tan);
+        d=Math.abs((Constants.PORT_HEIGHT-Constants.CAM_HEIGHT)/tan);
 
         //post to smart dashboard periodically
         SmartDashboard.putNumber("LimelightX", x);
@@ -32,4 +33,10 @@ public class LimeLightSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("LimelightArea", area);
         SmartDashboard.putNumber("Distance to target", d);
     }
+    public double returnD(){
+        return d;
+    }
+	public double returnTY() {
+		return ty.getDouble(0.0);
+	}
 }
