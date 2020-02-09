@@ -27,9 +27,11 @@ public class HopperSubsystem extends SubsystemBase {
   // here. Call these from Commands.
   private final TalonSRX hopperTurn;
   private DigitalInput hopperSwitch;
+  private DigitalInput hopperSwitch2;
   public HopperSubsystem() {
-    hopperTurn = new TalonSRX(Constants.hopper);
-    hopperSwitch = new DigitalInput(Constants.hSwitch);
+    hopperTurn = new TalonSRX(Constants.HOPPER);
+    hopperSwitch = new DigitalInput(Constants.HSWITCH);
+    hopperSwitch2=new DigitalInput(Constants.HSWITCH2);
   }
   public void start(double speed) {
     hopperTurn.set(ControlMode.PercentOutput,speed);
@@ -39,5 +41,8 @@ public class HopperSubsystem extends SubsystemBase {
   }
   public boolean getHopperSwitchState() {
     return hopperSwitch.get();
+  }
+  public boolean getHopperSwitch2(){
+    return hopperSwitch2.get();
   }
 }

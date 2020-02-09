@@ -3,6 +3,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.LauncherSubsystem;
 
 public class ChangeLauncherSpeedCommand extends CommandBase{
@@ -29,7 +31,9 @@ public class ChangeLauncherSpeedCommand extends CommandBase{
         if(n==0)
         fin=true;
         //*/
-        fin=true;
+        if(!RobotContainer.coDriverOI.getRawButton(Constants.LEFT_BUMPER)){
+            fin=true;
+        }
     }
     @Override
     public boolean isFinished() {
@@ -37,5 +41,8 @@ public class ChangeLauncherSpeedCommand extends CommandBase{
     }
     @Override
     public void end(boolean interrupted) {
+        if(RobotContainer.coDriverOI.getRawButtonReleased(Constants.LEFT_BUMPER)){
+            mLauncher.setSetpoint(0);
+        }
     }
 }

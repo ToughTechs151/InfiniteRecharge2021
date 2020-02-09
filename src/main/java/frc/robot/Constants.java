@@ -17,9 +17,9 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final double PORT_HEIGHT=89.75;
-    public static final double ANGLE=12;
-    public static final double CAM_HEIGHT=15;
+    public static final double PORT_HEIGHT=86.75;
+    public static final double ANGLE=4;
+    public static final double CAM_HEIGHT=5.5;
     //joystick ports
     public static final int A = 1;
     public static final int B = 2;
@@ -44,7 +44,8 @@ public final class Constants {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
-  public static final int hSwitch=0;
+  public static final int HSWITCH=0;
+  public static final int HSWITCH2 = 3;
   //PWM PORTS
   public static final int FRONT_RIGHT = 2;
   public static final int BACK_RIGHT = 3;
@@ -52,14 +53,14 @@ public final class Constants {
   public static final int BACK_LEFT = 6;
 
   //CAN IDs
-  public static final int hopper = 7;
-  public static final int Launcher1 = 5;
-  public static final int Launcher2 = 6;
+  public static final int HOPPER = 2;
+  public static final int LAUNCHER1 = 5;
+  public static final int LAUNCHER2 = 6;
 
   //Final Variables
-  public static final double Kp=0.0003;
-  public static final double Ki=0.00028;
-  public static final double Kd=0;
+  public static final double LAUNCHERKP=0.0003;
+  public static final double LAUNCHERKI=0.00028;
+  public static final double LAUNCHERKD=0;
 
 }
 

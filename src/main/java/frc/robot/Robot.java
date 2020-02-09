@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
  // public Command m_autonomousCommand;
   public static RobotContainer m_robotContainer;
   public Command m_driveCommand;
+  public Command m_hopperCommand;
 
 
   /**
@@ -68,6 +69,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    //wheels radius = 3 in
  /*   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -85,6 +87,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_hopperCommand = m_robotContainer.getHopperCommand();
     m_driveCommand = m_robotContainer.getDriveCommand();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -93,6 +96,9 @@ public class Robot extends TimedRobot {
     if (m_driveCommand != null){
       m_driveCommand.schedule();
     }
+    if (m_hopperCommand!=null)
+      m_hopperCommand.schedule();
+    
   }
 
   /**

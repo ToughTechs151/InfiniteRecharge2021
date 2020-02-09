@@ -10,24 +10,33 @@ package frc.robot.commands;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class HopperCommand extends CommandBase {
   private HopperSubsystem m_hopperSubsystem;
+  private Joystick coDrive;
+  private Timer time;
+  private TimerTask task;
+  private boolean prevState;
   /**
    * Creates a new HopperCommand.
    */
 
   private double speed;
-  public HopperCommand(HopperSubsystem subsystem, double speed) {
+  public HopperCommand(HopperSubsystem subsystem, double speed, Joystick coDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
+    this.coDrive=coDrive;
     m_hopperSubsystem = subsystem;
     addRequirements(subsystem);
+    time=new Timer();
+    
   }
 
 
@@ -40,7 +49,32 @@ public class HopperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_hopperSubsystem.start(speed);
+    if(coDrive.getRawButton(Constants.LEFT_BUMPER)){
+      if(!m_hopperSubsystem.getHopperSwitch2()){
+        m_hopperSubsystem.start(0-speed);
+      }
+      else 
+        m_hopperSubsystem.stop();
+    }
+    else{
+    if(coDrive.getRawButton(Constants.RIGHT_BUMPER)||!m_hopperSubsystem.getHopperSwitch2()){
+      if(prevState&&coDrive.getRawButton(Constants.RIGHT_BUMPER)){
+        time.schedule(task=new TimerTask(){
+          @Override
+          public void run() {
+            m_hopperSubsystem.start(speed);
+          }
+        },1);
+      }
+      m_hopperSubsystem.stop();
+    }
+    else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||!m_hopperSubsystem.getHopperSwitchState()){
+      m_hopperSubsystem.start(speed);
+    }
+    else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())
+      m_hopperSubsystem.stop();
+    prevState=m_hopperSubsystem.getHopperSwitch2();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -52,6 +86,6 @@ public class HopperCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_hopperSubsystem.getHopperSwitchState();
+    return false;
   }
 }

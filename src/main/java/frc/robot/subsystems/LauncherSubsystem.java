@@ -27,8 +27,8 @@ public class LauncherSubsystem extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static PIDController pid;
-  private static CANSparkMax launcher1 = new CANSparkMax(Constants.Launcher1,MotorType.kBrushless);
-  private static CANSparkMax launcher2 = new CANSparkMax(Constants.Launcher2,MotorType.kBrushless);
+  private static CANSparkMax launcher1 = new CANSparkMax(Constants.LAUNCHER1, MotorType.kBrushless);
+  private static CANSparkMax launcher2 = new CANSparkMax(Constants.LAUNCHER2, MotorType.kBrushless);
   private static CANEncoder lEncoder = new CANEncoder(launcher1);
   //private static Talon launcher1 = new Talon(Constants.Launcher1);
   //private static Talon launcher2 = new Talon(Constants.Launcher2);
@@ -78,6 +78,10 @@ public class LauncherSubsystem extends PIDSubsystem {
 protected void useOutput(double output, double setpoint) {
   if(setpoint == 0){
     setpoint=(getController().getSetpoint()*0.9);
+    if(setpoint>=-100&&setpoint<=100){
+      setpoint=0;
+    }
+
   }
   output=getController().calculate(output,setpoint)/lEncoder.getVelocityConversionFactor();
   launcher1.set(output*0.95);

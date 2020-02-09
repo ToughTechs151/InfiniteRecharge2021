@@ -21,7 +21,7 @@ public class AdjustLauncherCommand extends CommandBase {
 
     }
     public void changeSpeed(double speed){
-        setspeed = speed*15;
+        setspeed =642*Math.pow(speed,0.332);
     }
     public void execute(){
         changeSpeed(mLime.returnD());
