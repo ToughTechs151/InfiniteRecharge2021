@@ -59,8 +59,8 @@ public final class Constants {
 
   //Final Variables
   public static final double LAUNCHERKP=0.0003;
-  public static final double LAUNCHERKI=0.00028;
-  public static final double LAUNCHERKD=0;
+  public static final double LAUNCHERKI=0.00032;
+  public static final double LAUNCHERKD=0.00000005;
 
 }
 
