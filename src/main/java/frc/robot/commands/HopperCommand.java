@@ -23,7 +23,7 @@ public class HopperCommand extends CommandBase {
   private Joystick coDrive;
   private Timer time;
   private TimerTask task;
-  private boolean prevState;
+  private boolean prevState=true;
   /**
    * Creates a new HopperCommand.
    */
@@ -59,10 +59,12 @@ public class HopperCommand extends CommandBase {
     else{
     if(coDrive.getRawButton(Constants.RIGHT_BUMPER)||!m_hopperSubsystem.getHopperSwitch2()){
       if(prevState&&coDrive.getRawButton(Constants.RIGHT_BUMPER)){
+        prevState=false;
         time.schedule(task=new TimerTask(){
           @Override
           public void run() {
             m_hopperSubsystem.start(speed);
+            prevState=true;
           }
         },1);
       }
@@ -73,7 +75,6 @@ public class HopperCommand extends CommandBase {
     }
     else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())
       m_hopperSubsystem.stop();
-    prevState=m_hopperSubsystem.getHopperSwitch2();
     }
   }
 
