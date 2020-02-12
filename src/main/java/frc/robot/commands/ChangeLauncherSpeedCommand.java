@@ -11,7 +11,6 @@ public class ChangeLauncherSpeedCommand extends CommandBase{
     private boolean fin=false;
     private double setspeed;
     private LauncherSubsystem mLauncher;
-    //private int n=200;
     public ChangeLauncherSpeedCommand(double speed, LauncherSubsystem launcher) {
         setspeed=speed;
         mLauncher=launcher;
@@ -20,17 +19,8 @@ public class ChangeLauncherSpeedCommand extends CommandBase{
     public void initialize(){
 
     }
-    public void changeSpeed(double speed){
-        setspeed = speed;
-    }
     public void execute(){
-       //*/
         mLauncher.setSetpoint(setspeed);
-        /*mLauncher.setSpeed(setspeed/n);
-        n++;
-        if(n==0)
-        fin=true;
-        //*/
         if(!RobotContainer.coDriverOI.getRawButton(Constants.LEFT_BUMPER)){
             fin=true;
         }

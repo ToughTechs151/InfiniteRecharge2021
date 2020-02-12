@@ -58,26 +58,33 @@ public class HopperCommand extends CommandBase {
     }
     else{
       //check for ready ball and command to launch
-    if(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2()){
-      if(prevState){
-        prevState=false;
-        time.schedule(task=new TimerTask(){
-          @Override
-          public void run() {
-            m_hopperSubsystem.start(speed);
-            prevState=true;
-          }
-        },10);
+      if(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2()){
+        if(prevState){
+          prevState=false;
+          time.schedule(task=new TimerTask(){
+            @Override
+            public void run() {
+              m_hopperSubsystem.start(speed);
+              time.schedule(task=new TimerTask(){
+                @Override
+                public void run() {
+                  
+                  prevState=true;
+                }
+              },500);
+            }
+          },500);
+        }
+        m_hopperSubsystem.stop();
       }
-      m_hopperSubsystem.stop();
-    }
-    //check for intent to launch or if there is a ball to intake without forcing into the launcher
-    else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState()&&m_hopperSubsystem.getHopperSwitch2())){
-      m_hopperSubsystem.start(speed);
-    }
-    //check to see if the hopper should stop
-    else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())
-      m_hopperSubsystem.stop();
+      //check to see if the hopper should stop
+      else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())
+        m_hopperSubsystem.stop();
+      
+      //check for intent to launch or if there is a ball to intake without forcing into the launcher
+      else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState()&&m_hopperSubsystem.getHopperSwitch2())){
+        m_hopperSubsystem.start(speed);
+      }
     }
   }
 

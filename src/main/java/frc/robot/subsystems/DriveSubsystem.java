@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.networktables.NetworkTable;
@@ -17,16 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends SubsystemBase {
   // Drive motors
-  private Talon frontRight;
-  private Talon backRight;
-  private Talon frontLeft;
-  private Talon backLeft;
+  private WPI_VictorSPX frontRight;
+  private WPI_VictorSPX backRight;
+  private WPI_VictorSPX frontLeft;
+  private WPI_VictorSPX backLeft;
   public DriveSubsystem(){
     //Assign drive motors
-    frontRight = new Talon(Constants.FRONT_RIGHT);
-    backRight = new Talon(Constants.BACK_RIGHT);
-    frontLeft = new Talon(Constants.FRONT_LEFT);
-    backLeft = new Talon(Constants.BACK_LEFT);
+    frontRight = new WPI_VictorSPX(Constants.FRONT_RIGHT);
+    backRight = new WPI_VictorSPX(Constants.BACK_RIGHT);
+    frontLeft = new WPI_VictorSPX(Constants.FRONT_LEFT);
+    backLeft = new WPI_VictorSPX(Constants.BACK_LEFT);
     //Group drive motors based on location  
     SpeedControllerGroup left = new SpeedControllerGroup(frontRight, backRight);
     SpeedControllerGroup right= new SpeedControllerGroup(frontLeft, backLeft);

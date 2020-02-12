@@ -47,20 +47,20 @@ public final class Constants {
   public static final int HSWITCH=0;
   public static final int HSWITCH2 = 3;
   //PWM PORTS
-  public static final int FRONT_RIGHT = 2;
-  public static final int BACK_RIGHT = 3;
-  public static final int FRONT_LEFT = 4;
-  public static final int BACK_LEFT = 6;
+  
 
   //CAN IDs
   public static final int HOPPER = 2;
   public static final int LAUNCHER1 = 5;
   public static final int LAUNCHER2 = 6;
-
+  public static final int FRONT_RIGHT = 14;
+  public static final int BACK_RIGHT = 15;
+  public static final int FRONT_LEFT = 11;
+  public static final int BACK_LEFT = 12;
   //Final Variables
   public static final double LAUNCHERKP=0.0003;
   public static final double LAUNCHERKI=0.00032;
-  public static final double LAUNCHERKD=0.00000005;
+  public static final double LAUNCHERKD=0.00000003;
 
 }
 
