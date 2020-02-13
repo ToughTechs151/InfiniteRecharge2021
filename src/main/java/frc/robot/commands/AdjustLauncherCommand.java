@@ -11,6 +11,11 @@ public class AdjustLauncherCommand extends CommandBase {
     private double setspeed;
     private LauncherSubsystem mLauncher;
     private LimeLightSubsystem mLime;
+    /**
+     * The command to automatically set the launcher speed based on distance to target
+     * @param launcher
+     * @param lime
+     */
     public AdjustLauncherCommand(LauncherSubsystem launcher,LimeLightSubsystem lime) {
         mLauncher=launcher;
         mLime=lime;
@@ -20,9 +25,16 @@ public class AdjustLauncherCommand extends CommandBase {
     public void initialize(){
 
     }
+    /**
+     * changes the input based off of the best fit trendline of data collected
+     * @param speed the distance
+     */
     public void changeSpeed(double speed){
         setspeed =642*Math.pow(speed,0.332);
     }
+    /**
+     * called when the command is scheduled
+     */
     public void execute(){
         changeSpeed(mLime.returnD());
         mLauncher.setSetpoint(setspeed);

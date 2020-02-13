@@ -24,11 +24,13 @@ public class HopperCommand extends CommandBase {
   private Timer time;
   private TimerTask task;
   private boolean prevState=true;
-  /**
-   * Creates a new HopperCommand.
-   */
-
   private double speed;
+  /**
+   * hopper command constructor
+   * @param subsystem the hopper subsystem
+   * @param speed the speed of the hopper(%)
+   * @param coDrive the codrivers input
+   */
   public HopperCommand(HopperSubsystem subsystem, double speed, Joystick coDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
@@ -46,7 +48,9 @@ public class HopperCommand extends CommandBase {
     
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * called when the command is scheduled
+   */
   @Override
   public void execute() {
     if(coDrive.getRawButton(Constants.LEFT_BUMPER)){
@@ -61,6 +65,7 @@ public class HopperCommand extends CommandBase {
       if(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2()){
         if(prevState){
           prevState=false;
+          m_hopperSubsystem.stop();
           time.schedule(task=new TimerTask(){
             @Override
             public void run() {
@@ -71,11 +76,10 @@ public class HopperCommand extends CommandBase {
                   
                   prevState=true;
                 }
-              },500);
+              },200);
             }
           },500);
         }
-        m_hopperSubsystem.stop();
       }
       //check to see if the hopper should stop
       else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())

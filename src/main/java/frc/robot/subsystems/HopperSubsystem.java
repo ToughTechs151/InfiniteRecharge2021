@@ -20,7 +20,7 @@ import frc.robot.Constants;
 
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * The hopper subsystem
  */
 public class HopperSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
@@ -28,20 +28,38 @@ public class HopperSubsystem extends SubsystemBase {
   private final TalonSRX hopperTurn;
   private DigitalInput hopperSwitch;
   private DigitalInput hopperSwitch2;
+  /**
+   * The hopper subsystem constructor
+   */
   public HopperSubsystem() {
     hopperTurn = new TalonSRX(Constants.HOPPER);
     hopperSwitch = new DigitalInput(Constants.HSWITCH);
     hopperSwitch2=new DigitalInput(Constants.HSWITCH2);
   }
+  /**
+   * turns the hopper at a set percent speed
+   * @param speed input from hopper command
+   */
   public void start(double speed) {
     hopperTurn.set(ControlMode.PercentOutput,speed);
   }
+  /**
+   * Sets the hopper speed to 0.
+   */
   public void stop(){
     hopperTurn.set(ControlMode.PercentOutput,0);
   }
+  /**
+   * gets digital input 0's state
+   * @return returns digital input 0's state
+   */
   public boolean getHopperSwitchState() {
     return hopperSwitch.get();
   }
+  /**
+   * gets digital input 3's state
+   * @return returns digital input 3's state
+   */
   public boolean getHopperSwitch2(){
     return hopperSwitch2.get();
   }

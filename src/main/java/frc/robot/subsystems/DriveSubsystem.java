@@ -12,15 +12,17 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * An example subsystem. 
+ * The subsystem for the main drivetrain
  */
-
 public class DriveSubsystem extends SubsystemBase {
   // Drive motors
   private WPI_VictorSPX frontRight;
   private WPI_VictorSPX backRight;
   private WPI_VictorSPX frontLeft;
   private WPI_VictorSPX backLeft;
+  /**
+   * The subsystem for the main drivetrain's constructor
+   */
   public DriveSubsystem(){
     //Assign drive motors
     frontRight = new WPI_VictorSPX(Constants.FRONT_RIGHT);
@@ -42,11 +44,18 @@ public class DriveSubsystem extends SubsystemBase {
   static double speedMultiplier = 1.0;
   static double normal = 1.0;
   static double crawl = .5;
-
+  /**
+   * called to drive the robot
+   * @param x left wheels
+   * @param y right wheels
+   */
   public void drive(double x, double y) {
     driveTrain.tankDrive(x, y);
   }
-
+  /**
+   * A set of instructions to interpret input
+   * @param oi the driver
+   */
   public void driveTank(Joystick oi) {
     //check to see if the robot should drive slower
     speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
@@ -67,7 +76,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     drive((leftDrive/Math.abs(leftDrive))*Math.pow(leftDrive,2)* speedMultiplier, Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive))* speedMultiplier);
   }
-  //checks value against software deadband to avoid minor variations in joystick position
+  /**
+   * checks value against software deadband to avoid minor variations in joystick position
+   * @param val The input of the joystick
+   */
   private static double deadzone(double val) {
     return Math.abs(val) > softwareDeadband ? val : 0;
 }

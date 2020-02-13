@@ -11,7 +11,12 @@ public class DriveWithJoysticksCommand extends CommandBase {
   private final DriveSubsystem m_drive;
   private final LimeLightSubsystem m_light;
   private final Joystick m_driver;
-  //commands require a subsystem to connect to, and also any other relevant inputs
+  /**
+   * The command for driving the robot during teleop
+   * @param drive the drivetrain
+   * @param driver the driver input
+   * @param light the limelight
+   */
   public DriveWithJoysticksCommand(DriveSubsystem drive,Joystick driver,LimeLightSubsystem light) {
     m_drive=drive;
     m_driver=driver;   
