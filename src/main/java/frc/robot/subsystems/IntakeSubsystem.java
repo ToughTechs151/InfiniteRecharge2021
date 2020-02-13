@@ -7,7 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -15,10 +18,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  private WPI_TalonSRX intake;
   
   public IntakeSubsystem() {
+    intake=new WPI_TalonSRX(Constants.INTAKE);
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+  public void runIntake(double speed){
+    intake.set(speed);
   }
 }

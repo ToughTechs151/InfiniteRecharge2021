@@ -50,7 +50,8 @@ public final class Constants {
   
 
   //CAN IDs
-  public static final int HOPPER = 2;
+  public static final int INTAKE = 1;
+  public static final int HOPPER = 3;
   public static final int LAUNCHER1 = 5;
   public static final int LAUNCHER2 = 6;
   public static final int FRONT_RIGHT = 14;
@@ -61,6 +62,7 @@ public final class Constants {
   public static final double LAUNCHERKP=0.0003;
   public static final double LAUNCHERKI=0.00032;
   public static final double LAUNCHERKD=0.00000003;
+
 
 }
 

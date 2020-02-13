@@ -17,6 +17,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.IntakeCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -47,6 +49,9 @@ public class RobotContainer {
   public final static PIDController launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI,
       Constants.LAUNCHERKD);
   private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
+  public final IntakeSubsystem mIntakeSubsystem= new IntakeSubsystem();
+  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, 1);
+  private final IntakeCommand stopIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -78,6 +83,10 @@ public class RobotContainer {
     //RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
+    JoystickButton A = new JoystickButton(driverOI, 1);
+    A.whenPressed(feedIntakeCommand);
+    JoystickButton B = new JoystickButton(driverOI, 2);
+    B.whenPressed(stopIntakeCommand);
 
   }
 
