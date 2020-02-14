@@ -74,9 +74,9 @@ public class RobotContainer {
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
     Bc.whenPressed(new ChangeLauncherSpeedCommand(0,mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(2950, mLauncherSubsystem));
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(2950, mLauncherSubsystem));//2950
     JoystickButton Yc = new JoystickButton(coDriverOI, 4);
-    Yc.whenPressed(new ChangeLauncherSpeedCommand(3750, mLauncherSubsystem));//2950
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(3750, mLauncherSubsystem));//3750
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);

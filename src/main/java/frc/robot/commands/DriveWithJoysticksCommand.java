@@ -5,7 +5,9 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+/**
+ * command to drive the drivetrain using joysticks
+ */
 public class DriveWithJoysticksCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_drive;

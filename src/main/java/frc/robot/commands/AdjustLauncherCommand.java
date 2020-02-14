@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
-
+/**
+ * The command to automatically set the launcher speed based on distance to target
+ */
 public class AdjustLauncherCommand extends CommandBase {
     private boolean fin=false;
     private double setspeed;

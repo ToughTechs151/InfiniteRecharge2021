@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LauncherSubsystem;
-
+/**
+ * changes the setpoint of the launcher PID controller
+ */
 public class ChangeLauncherSpeedCommand extends CommandBase{
     private boolean fin=false;
     private double setspeed;

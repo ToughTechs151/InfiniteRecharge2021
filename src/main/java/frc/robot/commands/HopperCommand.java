@@ -17,7 +17,9 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.HopperSubsystem;
-
+/**
+ * Command to feed Launcher
+ */
 public class HopperCommand extends CommandBase {
   private HopperSubsystem m_hopperSubsystem;
   private Joystick coDrive;
