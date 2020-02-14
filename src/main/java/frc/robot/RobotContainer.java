@@ -50,7 +50,7 @@ public class RobotContainer {
       Constants.LAUNCHERKD);
   private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
   public final IntakeSubsystem mIntakeSubsystem= new IntakeSubsystem();
-  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, 1);
+  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0.35);
   private final IntakeCommand stopIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
