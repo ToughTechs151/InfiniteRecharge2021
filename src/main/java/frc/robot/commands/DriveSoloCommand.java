@@ -37,6 +37,12 @@ public class DriveSoloCommand extends CommandBase{
             fin=true;
         }
     }
+    public boolean isFinished(){
+        return fin;
+    }
+    public void end(boolean interrupted){
+        
+    }
 
 
 }

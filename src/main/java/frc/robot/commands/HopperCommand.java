@@ -22,11 +22,12 @@ import frc.robot.subsystems.HopperSubsystem;
  */
 public class HopperCommand extends CommandBase {
   private HopperSubsystem m_hopperSubsystem;
-  private Joystick coDrive;
+  private Joystick coDrive = new Joystick(9);
   private Timer time;
   private TimerTask task;
   private boolean prevState=true;
   private double speed;
+  private boolean auto=false;
   /**
    * hopper command constructor
    * @param subsystem the hopper subsystem
@@ -44,7 +45,16 @@ public class HopperCommand extends CommandBase {
   }
 
 
-  // Called when the command is initially scheduled.
+  public HopperCommand(HopperSubsystem hopperSubsystem, double hopperSpeed) {
+    speed=hopperSpeed;
+    m_hopperSubsystem=hopperSubsystem;
+    addRequirements(hopperSubsystem);
+    time=new Timer();
+    auto=true;
+}
+
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
     
@@ -55,7 +65,7 @@ public class HopperCommand extends CommandBase {
    */
   @Override
   public void execute() {
-    if(coDrive.getRawButton(Constants.LEFT_BUMPER)){
+    if(!auto&&coDrive.getRawButton(Constants.LEFT_BUMPER)){
       if(!m_hopperSubsystem.getHopperSwitch2()){
         m_hopperSubsystem.start(0-speed);
       }
@@ -64,7 +74,7 @@ public class HopperCommand extends CommandBase {
     }
     else{
       //check for ready ball and command to launch
-      if(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2()){
+      if(auto||(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2())){
         if(prevState){
           prevState=false;
           m_hopperSubsystem.stop();

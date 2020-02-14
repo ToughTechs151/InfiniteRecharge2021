@@ -23,6 +23,7 @@ public class Robot extends TimedRobot {
   public static RobotContainer m_robotContainer;
   public Command m_driveCommand;
   public Command m_hopperCommand;
+  public Command m_autonomousCommand;
 
 
   /**
@@ -69,13 +70,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //wheels radius = 3 in
- /*   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }*/
+    }
   }
 
   /**

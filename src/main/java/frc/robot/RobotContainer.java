@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.AdjustLauncherCommand;
+import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
@@ -52,6 +53,7 @@ public class RobotContainer {
   public final IntakeSubsystem mIntakeSubsystem= new IntakeSubsystem();
   private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0.35);
   private final IntakeCommand stopIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0);
+  private final AutonomousCommand AUTO=new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -90,15 +92,7 @@ public class RobotContainer {
 
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  /*
-   * public Command getAutonomousCommand() { // An ExampleCommand will run in
-   * autonomous return m_autoCommand; }
-   */
+  
   public Command getDriveCommand() {
 
     return m_DriveWithJoysticksCommand;
@@ -109,5 +103,8 @@ public class RobotContainer {
   }
   public Command getHopperCommand(){
     return m_hopperCommand;
+  }
+  public Command getAutonomousCommand(){
+    return AUTO;
   }
 }
