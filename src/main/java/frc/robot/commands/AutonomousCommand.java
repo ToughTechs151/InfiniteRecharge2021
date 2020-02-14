@@ -26,7 +26,7 @@ public class AutonomousCommand extends CommandGroupBase {
    }
 
    public void inititialize(){
-      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 200));
+      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180));
       addCommands(new AdjustLauncherCommand(launcherSubsystem, lime));
       addCommands(new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }

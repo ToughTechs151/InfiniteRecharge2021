@@ -33,7 +33,7 @@ public class DriveSoloCommand extends CommandBase{
           rightAdjust-=steering_adjust;
         }
         drive.drive(leftAdjust,rightAdjust);
-        if(lime.returnD()>=z-50&&lime.returnD()<=z+50){
+        if(lime.returnD()>=z-10&&lime.returnD()<=z+10){
             fin=true;
         }
     }
@@ -41,7 +41,7 @@ public class DriveSoloCommand extends CommandBase{
         return fin;
     }
     public void end(boolean interrupted){
-        
+
     }
 
 
