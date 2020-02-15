@@ -41,6 +41,7 @@ public class HopperCommand extends CommandBase {
     m_hopperSubsystem = subsystem;
     addRequirements(subsystem);
     time=new Timer();
+    auto=false;
     
   }
 
@@ -94,8 +95,11 @@ public class HopperCommand extends CommandBase {
         }
       }
       //check to see if the hopper should stop
-      else if(!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())
+      else if((!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())||!m_hopperSubsystem.getHopperSwitch2())
         m_hopperSubsystem.stop();
+        if(!m_hopperSubsystem.getHopperSwitch2()){
+
+        }
       
       //check for intent to launch or if there is a ball to intake without forcing into the launcher
       else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState()&&m_hopperSubsystem.getHopperSwitch2())){

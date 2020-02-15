@@ -52,6 +52,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void drive(double x, double y) {
     driveTrain.tankDrive(x, y);
   }
+  
   /**
    * A set of instructions to interpret input
    * @param oi the driver
@@ -62,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
     double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
-    float Kp=-0.075f;
+    float Kp=-0.05f;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     //checks for input from drive to allign to target.
     if(oi.getRawButton(Constants.LEFT_BUMPER) ? true : false)

@@ -18,8 +18,8 @@ package frc.robot;
 public final class Constants {
 
     public static final double PORT_HEIGHT=86.75;
-    public static final double ANGLE=4;
-    public static final double CAM_HEIGHT=5.5;
+    public static final double ANGLE=7;
+    public static final double CAM_HEIGHT=9.25;
     //joystick ports
     public static final int A = 1;
     public static final int B = 2;

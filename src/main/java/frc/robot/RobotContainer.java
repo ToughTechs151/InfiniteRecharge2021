@@ -51,7 +51,7 @@ public class RobotContainer {
       Constants.LAUNCHERKD);
   private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
   public final IntakeSubsystem mIntakeSubsystem= new IntakeSubsystem();
-  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0.35);
+  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, -0.35);
   private final IntakeCommand stopIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0);
   private final AutonomousCommand AUTO=new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem);
   /**
