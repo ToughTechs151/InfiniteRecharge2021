@@ -35,6 +35,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
+    m_drive.driveTrain.feedWatchdog();
     m_drive.driveTank(m_driver);
     m_light.dashBoard();
   }
