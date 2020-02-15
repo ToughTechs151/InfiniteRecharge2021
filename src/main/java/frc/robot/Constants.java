@@ -50,6 +50,7 @@ public final class Constants {
   
 
   //CAN IDs
+  //Sequence RIO 1 3 5 6 11 12 14 15 
   public static final int INTAKE = 1;
   public static final int HOPPER = 3;
   public static final int LAUNCHER1 = 5;
