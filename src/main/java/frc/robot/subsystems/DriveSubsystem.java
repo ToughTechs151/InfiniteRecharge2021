@@ -39,6 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
     right.setInverted(true);
     driveTrain.feedWatchdog();
   }
+  private double mechDeadband=0.5;
   private static double softwareDeadband = 0.05;
   public DifferentialDrive driveTrain = null;
   static double speedMultiplier = 1.0;
@@ -75,8 +76,17 @@ public class DriveSubsystem extends SubsystemBase {
       leftDrive+=steering_adjust;
       rightDrive-=steering_adjust;
     }
-
-    drive((leftDrive/Math.abs(leftDrive))*Math.pow(leftDrive,2)* speedMultiplier, Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive))* speedMultiplier);
+    //leftDrive=leftDrive/Math.abs(leftDrive)*Math.pow(leftDrive,2);
+    //rightDrive=Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive));
+    if(leftDrive>0)
+      leftDrive=(1-mechDeadband)/Math.pow(1-softwareDeadband,2)*Math.pow(leftDrive-softwareDeadband, 2)+mechDeadband;
+    else if(leftDrive<0)
+      leftDrive=(-1+mechDeadband)/Math.pow(-1+softwareDeadband,2)*Math.pow(leftDrive+softwareDeadband, 2)-mechDeadband;
+    if(rightDrive>0)
+    rightDrive=(1-mechDeadband)/Math.pow(1-softwareDeadband,2)*Math.pow(rightDrive-softwareDeadband, 2)+mechDeadband;
+    else if(rightDrive<0)
+    rightDrive=(-1+mechDeadband)/Math.pow(-1+softwareDeadband,2)*Math.pow(rightDrive+softwareDeadband, 2)-mechDeadband;
+    drive(leftDrive * speedMultiplier, rightDrive * speedMultiplier);
   }
   /**
    * checks value against software deadband to avoid minor variations in joystick position

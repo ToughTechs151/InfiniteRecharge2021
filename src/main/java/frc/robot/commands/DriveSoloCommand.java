@@ -18,8 +18,10 @@ public class DriveSoloCommand extends CommandBase{
         right=y;
         this.z=z;
         addRequirements(drive);
+        this.drive.driveTrain.feedWatchdog();
     }
     public void execute(){
+        this.drive.driveTrain.feedWatchdog();
         float Kp=-0.075f;
         leftAdjust=left;
         rightAdjust=right;
@@ -32,12 +34,15 @@ public class DriveSoloCommand extends CommandBase{
           leftAdjust+=steering_adjust;
           rightAdjust-=steering_adjust;
         }
+        this.drive.driveTrain.feedWatchdog();
         drive.drive(leftAdjust,rightAdjust);
         if(lime.returnD()>=z-10&&lime.returnD()<=z+10){
             fin=true;
         }
+        this.drive.driveTrain.feedWatchdog();
     }
     public boolean isFinished(){
+        this.drive.driveTrain.feedWatchdog();
         return fin;
     }
     public void end(boolean interrupted){

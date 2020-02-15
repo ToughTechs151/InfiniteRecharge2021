@@ -73,13 +73,13 @@ public class LauncherSubsystem extends PIDSubsystem {
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if(setpoint>=getController().getSetpoint()){
+    if(Math.abs(setpoint)>=Math.abs(getController().getSetpoint())){
       setpoint=(getController().getSetpoint()*10.0/9.0);
       if(setpoint>=this.setpoint-100&&setpoint<=this.setpoint+100){
         setpoint=this.setpoint;
       }
     }
-    else if(setpoint<getController().getSetpoint()){
+    else if(Math.abs(setpoint)<Math.abs(getController().getSetpoint())){
       setpoint=(getController().getSetpoint()*0.9);
       if(setpoint>=this.setpoint-100&&setpoint<=this.setpoint+100){
         setpoint=this.setpoint;

@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     if (m_driveCommand != null){
-      m_driveCommand.schedule();
+      m_driveCommand.schedule(false);
     }
     if (m_hopperCommand!=null)
       m_hopperCommand.schedule();
