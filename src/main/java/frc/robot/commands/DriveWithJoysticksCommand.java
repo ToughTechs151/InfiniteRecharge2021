@@ -3,8 +3,12 @@ package frc.robot.commands;
 import frc.robot.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  * command to drive the drivetrain using joysticks
  */
@@ -13,6 +17,8 @@ public class DriveWithJoysticksCommand extends CommandBase {
   private final DriveSubsystem m_drive;
   private final LimeLightSubsystem m_light;
   private final Joystick m_driver;
+  private Timer timer;
+  private TimerTask task;
   /**
    * The command for driving the robot during teleop
    * @param drive the drivetrain
@@ -25,6 +31,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
     m_light=light;
     addRequirements(drive);
     addRequirements(light);
+    timer=new Timer();
   }
 
   // Called just before this Command runs the first time
@@ -35,6 +42,15 @@ public class DriveWithJoysticksCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
+    if(m_driver.getRawButton(Constants.RIGHT_BUMPER)||m_driver.getRawButton(Constants.A))
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    else{
+      timer.schedule(new TimerTask(){
+        public void run(){
+          NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+        }
+      }, 1000);
+    }
     m_drive.driveTrain.feedWatchdog();
     m_drive.driveTank(m_driver);
     m_light.dashBoard();

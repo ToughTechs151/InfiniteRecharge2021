@@ -24,16 +24,15 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(drive);
       addRequirements(launcherSubsystem);
       addRequirements(lime);
+      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180),new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }
 
    public void inititialize(){
-      solo=new DriveSoloCommand(drive, lime, 0.9, 0.9, 180);
-      solo.andThen(new AdjustLauncherCommand(launcherSubsystem, lime)).andThen(new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }
 
    @Override
    public void addCommands(Command... commands) {
-      andThen(commands);
+      sequence(commands);
    }
 
  }

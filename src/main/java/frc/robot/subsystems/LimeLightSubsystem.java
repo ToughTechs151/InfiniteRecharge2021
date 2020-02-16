@@ -38,5 +38,7 @@ public class LimeLightSubsystem extends SubsystemBase{
     }
 	public double returnTY() {
 		return ty.getDouble(0.0);
-	}
+    }
+    public void lightOn(){
+    }
 }
