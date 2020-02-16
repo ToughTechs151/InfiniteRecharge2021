@@ -28,6 +28,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import io.github.oblarg.oblog.Logger;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -60,7 +61,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     //Shuffleboard.addEventMarker("LauncherSpeed", EventImportance.kHigh);
+    Logger.configureLoggingAndConfig(this, false);
     configureButtonBindings();
+
   }
 
   /**
