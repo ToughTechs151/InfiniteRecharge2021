@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import com.fasterxml.jackson.databind.deser.std.PrimitiveArrayDeserializers;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
@@ -17,14 +19,17 @@ public class AutonomousCommand extends CommandGroupBase {
    private LimeLightSubsystem lime;
    private HopperSubsystem hopperSubsystem;
    private DriveSoloCommand solo;
-   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime) {
+   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem,Joystick codriver) {
       this.drive = drive;
+      this.hopperSubsystem=hopperSubsystem;
       this.launcherSubsystem = launcherSubsystem;
       this.lime=lime;
       addRequirements(drive);
       addRequirements(launcherSubsystem);
       addRequirements(lime);
-      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180),new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
+      addRequirements(hopperSubsystem);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180),new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED, codriver, false));
    }
 
    public void inititialize(){

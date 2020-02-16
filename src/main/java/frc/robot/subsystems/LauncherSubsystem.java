@@ -50,7 +50,7 @@ public class LauncherSubsystem extends PIDSubsystem {
    * @param set 
   */
   @Config
-  public void setsetpoint(double set){
+  public void setSetpoint(double set){
     setpoint=set;
     if(set!=0){
       try {

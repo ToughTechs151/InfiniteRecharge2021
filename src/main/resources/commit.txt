@@ -1,1 +1,1 @@
-b96a3f8 (HEAD -> SethWhite, origin/SethWhite) Added blu28's splash code
+76e8fcc (HEAD -> SethWhite) added logging to certain variables

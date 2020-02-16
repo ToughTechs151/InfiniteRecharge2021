@@ -39,31 +39,50 @@ import io.github.oblarg.oblog.Logger;
 public class RobotContainer {
   // OI joysticks 
   
-  public final Joystick driverOI=new Joystick(0);
-  public final static Joystick coDriverOI=new Joystick(1);
+  public  Joystick driverOI;
+  public static  Joystick coDriverOI;
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_driveSubsystem=new DriveSubsystem();
-  private final LimeLightSubsystem m_LimeLightSubsystem=new LimeLightSubsystem();
-  private final DriveWithJoysticksCommand m_DriveWithJoysticksCommand=new DriveWithJoysticksCommand(m_driveSubsystem,driverOI,m_LimeLightSubsystem);
-  public final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
-  private final HopperCommand m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0, coDriverOI);
+  private  DriveSubsystem m_driveSubsystem;
+  private  LimeLightSubsystem m_LimeLightSubsystem;
+  private  DriveWithJoysticksCommand m_DriveWithJoysticksCommand;
+  public  HopperSubsystem m_hopperSubsystem;
+  private  HopperCommand m_hopperCommand;
   
-  public final static PIDController launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI,
-      Constants.LAUNCHERKD);
-  private final LauncherSubsystem mLauncherSubsystem=  new LauncherSubsystem(launcherPID);
-  public final IntakeSubsystem mIntakeSubsystem= new IntakeSubsystem();
-  private final IntakeCommand feedIntakeCommand=new IntakeCommand(mIntakeSubsystem, -0.35);
-  private final IntakeCommand stopIntakeCommand=new IntakeCommand(mIntakeSubsystem, 0);
-  private final AutonomousCommand AUTO=new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem);
+  public static PIDController launcherPID;
+  private LauncherSubsystem mLauncherSubsystem;
+  public IntakeSubsystem mIntakeSubsystem;
+  private IntakeCommand feedIntakeCommand;
+  private IntakeCommand stopIntakeCommand;
+  private AutonomousCommand AUTO;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
-    //Shuffleboard.addEventMarker("LauncherSpeed", EventImportance.kHigh);
+    // Shuffleboard.addEventMarker("LauncherSpeed", EventImportance.kHigh);
     Logger.configureLoggingAndConfig(this, false);
+    configCommands();
     configureButtonBindings();
 
+  }
+
+  public void configCommands() {
+    driverOI = new Joystick(0);
+    coDriverOI = new Joystick(1);
+    // The robot's subsystems and commands are defined here...
+    m_driveSubsystem = new DriveSubsystem();
+    m_LimeLightSubsystem = new LimeLightSubsystem();
+    m_DriveWithJoysticksCommand = new DriveWithJoysticksCommand(m_driveSubsystem, driverOI, m_LimeLightSubsystem,coDriverOI);
+    m_hopperSubsystem = new HopperSubsystem();
+    m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0, coDriverOI, false);
+
+    launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI, Constants.LAUNCHERKD);
+    mLauncherSubsystem = new LauncherSubsystem(launcherPID);
+    mIntakeSubsystem = new IntakeSubsystem();
+    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.35);
+    stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
+    AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem, coDriverOI);
   }
 
   /**
@@ -77,15 +96,15 @@ public class RobotContainer {
     JoystickButton Ac = new JoystickButton(coDriverOI, 1);
     Ac.whenPressed(new AdjustLauncherCommand(mLauncherSubsystem, m_LimeLightSubsystem));
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
-    Bc.whenPressed(new ChangeLauncherSpeedCommand(0,mLauncherSubsystem));
+    Bc.whenPressed(new ChangeLauncherSpeedCommand(0, mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(2950, mLauncherSubsystem));//2950
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(2950, mLauncherSubsystem));// 2950
     JoystickButton Yc = new JoystickButton(coDriverOI, 4);
-    Yc.whenPressed(new ChangeLauncherSpeedCommand(3750, mLauncherSubsystem));//3750
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(3750, mLauncherSubsystem));// 3750
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-    //RIGHT_BUMPERc.whenHeld(m_hopperCommand);
+    // RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
     JoystickButton A = new JoystickButton(driverOI, 1);
@@ -95,7 +114,6 @@ public class RobotContainer {
 
   }
 
-  
   public Command getDriveCommand() {
 
     return m_DriveWithJoysticksCommand;
