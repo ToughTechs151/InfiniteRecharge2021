@@ -1,1 +1,1 @@
-af98147 (HEAD -> SethWhite) Post week zero fixes for rulings
+b96a3f8 (HEAD -> SethWhite, origin/SethWhite) Added blu28's splash code
