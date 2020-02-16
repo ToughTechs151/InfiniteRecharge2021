@@ -1,1 +1,1 @@
-b96a3f8 (HEAD -> SethWhite, origin/SethWhite) Added blu28's splash code
+39d3ad6 (HEAD -> SethWhite) Revert "Added blu28's splash code"
