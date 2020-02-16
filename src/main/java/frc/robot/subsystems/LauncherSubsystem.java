@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -32,6 +34,7 @@ public class LauncherSubsystem extends PIDSubsystem {
   private static CANEncoder lEncoder = new CANEncoder(launcher1);
   //private static Talon launcher1 = new Talon(Constants.Launcher1);
   //private static Talon launcher2 = new Talon(Constants.Launcher2);
+  @Log
   private static double setpoint = 0;
   private static SpeedControllerGroup launcher = new SpeedControllerGroup(launcher1, launcher2);
   /**
@@ -46,7 +49,8 @@ public class LauncherSubsystem extends PIDSubsystem {
    * Sets the setpoint for the pid controller
    * @param set 
   */
-  public void setSetpoint(double set){
+  @Config
+  public void setsetpoint(double set){
     setpoint=set;
     if(set!=0){
       try {
