@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import io.github.oblarg.oblog.annotations.*;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,9 +17,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-    public static final double PORT_HEIGHT=86.75;
+    @Log
+    public static double PORT_HEIGHT=86.75;
+    @Log
     public static final double ANGLE=7;
+    @Log
     public static final double CAM_HEIGHT=9.25;
     //joystick ports
     public static final int A = 1;
@@ -60,11 +63,29 @@ public final class Constants {
   public static final int FRONT_LEFT = 11;
   public static final int BACK_LEFT = 12;
   //Final Variables
-  public static final double LAUNCHERKP=0.0003;
-  public static final double LAUNCHERKI=0.00032;
-  public static final double LAUNCHERKD=0.00000003;
-  public static final double HOPPER_SPEED = 1;
-
-
+  @Log
+  public static double LAUNCHERKP=0.0003;
+  @Log
+  public static double LAUNCHERKI=0.00032;
+  @Log
+  public static double LAUNCHERKD=0.00000003;
+  @Log
+  public static double HOPPER_SPEED = 1;
+  @Config
+  public void setLAUNCHERKP(double value){
+    LAUNCHERKP=value;
+  }
+  @Config
+  public void setLAUNCHERKI(double value){
+    LAUNCHERKI=value;
+  }
+  @Config
+  public void setLAUNCHERKD(double value){
+    LAUNCHERKD=value;
+  }
+  @Config
+  public void setHOPPER_SPEED(double value){
+    HOPPER_SPEED=value;
+  }
 }
 

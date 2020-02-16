@@ -1,1 +1,1 @@
-build.gradle, Robot.java, RobotContainer.java
+src/main/resources/buildtime.txt, src/main/resources/changes.txt, src/main/resources/commit.txt, src/main/resources/remote.txt
