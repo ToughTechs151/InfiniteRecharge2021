@@ -17,13 +17,15 @@ public class AutonomousCommand extends CommandGroupBase {
    private LimeLightSubsystem lime;
    private HopperSubsystem hopperSubsystem;
    private DriveSoloCommand solo;
-   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime) {
+   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {
       this.drive = drive;
       this.launcherSubsystem = launcherSubsystem;
       this.lime=lime;
+      this.hopperSubsystem=hopperSubsystem;
       addRequirements(drive);
       addRequirements(launcherSubsystem);
       addRequirements(lime);
+      addRequirements(hopperSubsystem);
       addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180),new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }
 

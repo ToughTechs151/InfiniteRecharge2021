@@ -17,18 +17,21 @@ public class DriveWithJoysticksCommand extends CommandBase {
   private final DriveSubsystem m_drive;
   private final LimeLightSubsystem m_light;
   private final Joystick m_driver;
+  private Joystick coDriver;
   private Timer timer;
   private TimerTask task;
+  private boolean prevState=false;
   /**
    * The command for driving the robot during teleop
    * @param drive the drivetrain
    * @param driver the driver input
    * @param light the limelight
    */
-  public DriveWithJoysticksCommand(DriveSubsystem drive,Joystick driver,LimeLightSubsystem light) {
+  public DriveWithJoysticksCommand(DriveSubsystem drive,Joystick driver,LimeLightSubsystem light,Joystick coDriver) {
     m_drive=drive;
     m_driver=driver;   
     m_light=light;
+    this.coDriver=coDriver;
     addRequirements(drive);
     addRequirements(light);
     timer=new Timer();
@@ -42,14 +45,19 @@ public class DriveWithJoysticksCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    if(m_driver.getRawButton(Constants.RIGHT_BUMPER)||m_driver.getRawButton(Constants.A))
+    if(m_driver.getRawButton(Constants.RIGHT_BUMPER)||coDriver.getRawButton(Constants.A)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      prevState=true;
+    }
     else{
-      timer.schedule(new TimerTask(){
-        public void run(){
-          NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
-        }
-      }, 1000);
+      if(prevState){
+        timer.schedule(new TimerTask(){
+          public void run(){
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+          }
+        }, 1000);
+        prevState=false;
+      }
     }
     m_drive.driveTrain.feedWatchdog();
     m_drive.driveTank(m_driver);
