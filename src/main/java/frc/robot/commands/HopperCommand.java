@@ -34,16 +34,25 @@ public class HopperCommand extends CommandBase {
    * @param speed the speed of the hopper(%)
    * @param coDrive the codrivers input
    */
-  public HopperCommand(HopperSubsystem subsystem, double speed, Joystick coDrive, boolean auto) {
+  public HopperCommand(HopperSubsystem subsystem, double speed, Joystick coDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
     this.coDrive=coDrive;
     m_hopperSubsystem = subsystem;
     addRequirements(subsystem);
     time=new Timer();
-    this.auto=auto;
+    auto=false;
     
   }
+
+
+  public HopperCommand(HopperSubsystem hopperSubsystem, double hopperSpeed) {
+    speed=hopperSpeed;
+    m_hopperSubsystem=hopperSubsystem;
+    addRequirements(hopperSubsystem);
+    time=new Timer();
+    auto=true;
+}
 
 
 // Called when the command is initially scheduled.
