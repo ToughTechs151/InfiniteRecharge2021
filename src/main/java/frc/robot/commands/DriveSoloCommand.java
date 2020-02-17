@@ -24,19 +24,19 @@ public class DriveSoloCommand extends CommandBase{
     
     public DriveSoloCommand(DriveSubsystem drive,LimeLightSubsystem lime,double x,double y,double z){
         this.drive=drive;
-        this.drive.driveTrain.feedWatchdog();
+        
         this.lime=lime;
         left=x;
         right=y;
         this.z=z;
         addRequirements(drive);
-        this.drive.driveTrain.feedWatchdog();
+        
     }
     public void execute(){
-        this.drive.driveTrain.feedWatchdog();
+        
         firstTime = Timer.getFPGATimestamp();
         SmartDashboard.putNumber("Timing outside of execute", firstTime - lastTime);
-        this.drive.driveTrain.feedWatchdog();
+        
         float Kp=-0.0125f;
         leftAdjust=left;
         rightAdjust=right;
@@ -49,14 +49,16 @@ public class DriveSoloCommand extends CommandBase{
           leftAdjust+=steering_adjust;
           rightAdjust-=steering_adjust;
         }
-        this.drive.driveTrain.feedWatchdog();
-        drive.drive(leftAdjust,rightAdjust);
+        
+        
         if(lime.returnD()>=z){
             fin=true;
             
             drive.drive(0, 0);
         }
-        this.drive.driveTrain.feedWatchdog();
+        else{
+            drive.drive(leftAdjust,rightAdjust);
+        }
         lastTime = timer.getFPGATimestamp();
         SmartDashboard.putNumber("Timing within execute", lastTime - firstTime);
     }

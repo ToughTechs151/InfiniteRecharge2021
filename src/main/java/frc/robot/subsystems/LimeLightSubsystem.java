@@ -29,7 +29,12 @@ public class LimeLightSubsystem extends SubsystemBase{
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
         double tan = Math.tan((y+Constants.ANGLE)*Math.PI/180);
-        d=Math.abs((Constants.PORT_HEIGHT-Constants.CAM_HEIGHT)/tan);
+        try {
+            d=(Constants.PORT_HEIGHT-Constants.CAM_HEIGHT)/tan;
+        } catch (Exception divideByZeroException) {
+            System.out.println("Exception");
+        }
+        
 
         //post to smart dashboard periodically
         SmartDashboard.putNumber("LimelightX", x);
@@ -38,6 +43,7 @@ public class LimeLightSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Distance to target", d);
     }
     public double returnD(){
+        System.out.println(d);
         return d;
     }
 	public double returnTY() {

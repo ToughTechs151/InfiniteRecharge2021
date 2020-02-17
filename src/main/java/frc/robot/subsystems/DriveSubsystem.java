@@ -37,7 +37,7 @@ public class DriveSubsystem extends SubsystemBase {
     //adjust for which side of the robot should be front.
     left.setInverted(true);
     right.setInverted(true);
-    driveTrain.feedWatchdog();
+    
   }
   private double mechDeadband=0.5;
   private static double softwareDeadband = 0.05;
@@ -60,7 +60,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void driveTank(Joystick oi) {
     //check to see if the robot should drive slower
-    driveTrain.feedWatchdog();
+    
     speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
     double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));

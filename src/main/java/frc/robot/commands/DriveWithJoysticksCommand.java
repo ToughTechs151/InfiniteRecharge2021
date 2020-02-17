@@ -59,7 +59,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
         prevState=false;
       }
     }
-    m_drive.driveTrain.feedWatchdog();
+    
     m_drive.driveTank(m_driver);
     m_light.dashBoard();
   }

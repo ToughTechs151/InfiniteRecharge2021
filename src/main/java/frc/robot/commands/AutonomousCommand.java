@@ -47,5 +47,11 @@ public class AutonomousCommand extends CommandGroupBase {
       auto.schedule();
       done=true;
    }
+   public boolean isFinished(){
+      return done;
+   }
+   public void end(boolean interrupted){
+      
+   }
 
  }
