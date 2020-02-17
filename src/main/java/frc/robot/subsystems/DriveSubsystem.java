@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
     right.setInverted(true);
     
   }
-  private double mechDeadband=0.5;
+  private double mechDeadband=0.2;
   private static double softwareDeadband = 0.05;
   public DifferentialDrive driveTrain = null;
   static double speedMultiplier = 1.0;
@@ -86,6 +86,7 @@ public class DriveSubsystem extends SubsystemBase {
     rightDrive=(1-mechDeadband)/Math.pow(1-softwareDeadband,2)*Math.pow(rightDrive-softwareDeadband, 2)+mechDeadband;
     else if(deadzone(rightDrive)<0)
     rightDrive=(-1+mechDeadband)/Math.pow(-1+softwareDeadband,2)*Math.pow(rightDrive+softwareDeadband, 2)-mechDeadband;
+    //*/
     drive(leftDrive * speedMultiplier, rightDrive * speedMultiplier);
   }
   /**

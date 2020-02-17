@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
   @Override
@@ -74,7 +75,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -98,7 +99,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     if (m_driveCommand != null){
-      m_driveCommand.schedule(false);
+      m_driveCommand.schedule();
     }
     if (m_hopperCommand!=null)
       m_hopperCommand.schedule();

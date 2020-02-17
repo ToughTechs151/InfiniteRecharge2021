@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.AdjustLauncherCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
+import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.IntakeCommand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
@@ -53,6 +55,7 @@ public class RobotContainer {
   public IntakeSubsystem mIntakeSubsystem;
   private IntakeCommand feedIntakeCommand;
   private IntakeCommand stopIntakeCommand;
+  private IntakeCommand reverseIntake;
   private AutonomousCommand AUTO;
 
   /**
@@ -82,7 +85,9 @@ public class RobotContainer {
     mIntakeSubsystem = new IntakeSubsystem();
     feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.35);
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
+    reverseIntake= new IntakeCommand(mIntakeSubsystem, 0.35);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
+    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new DefaultDrive(m_driveSubsystem));
   }
 
   /**
@@ -111,6 +116,8 @@ public class RobotContainer {
     A.whenPressed(feedIntakeCommand);
     JoystickButton B = new JoystickButton(driverOI, 2);
     B.whenPressed(stopIntakeCommand);
+    JoystickButton X = new JoystickButton(driverOI, 3);
+    X.whenPressed(reverseIntake);
 
   }
 
