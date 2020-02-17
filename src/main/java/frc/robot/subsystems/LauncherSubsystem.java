@@ -34,58 +34,53 @@ public class LauncherSubsystem extends PIDSubsystem {
   private static CANEncoder lEncoder = new CANEncoder(launcher1);
   //private static Talon launcher1 = new Talon(Constants.Launcher1);
   //private static Talon launcher2 = new Talon(Constants.Launcher2);
-  @Log
-  private static double setpoint = 0;
+  private double setpoint = 0;
   private static SpeedControllerGroup launcher = new SpeedControllerGroup(launcher1, launcher2);
+
   /**
    * constructs the launcher subsystem
+   * 
    * @param inPID the pid controller for the launcher
    */
   public LauncherSubsystem(PIDController inPID) {
     super(inPID);
     launcher.setInverted(false);
   }
+
   /**
    * Sets the setpoint for the pid controller
-   * @param set 
-  */
-  @Config
-  public void setsetpoint(double set){
-    setpoint=set;
-    if(set!=0){
-      try {
-        getController().setSetpoint(setpoint);
-      } 
-      catch (NullPointerException Exception) {
-        System.out.println("Exception: " + Exception);
-        //TODO: handle exception
-      }
+   * 
+   * @param set
+   */
+  public void setSetpoint(double set) {
+    setpoint = set;
+    if (set != 0) {
+      getController().setSetpoint(setpoint);
     }
   }
+
   /**
    * runs periodically when enabled
    */
   public void periodic() {
-    //setSetpoint(RobotContainer.coDriverOI.getY()); NEVER EVER DO THIS
+    // setSetpoint(RobotContainer.coDriverOI.getY()); NEVER EVER DO THIS
     useOutput(lEncoder.getVelocity(), setpoint);
     SmartDashboard.putNumber("LauncherSpeed in RPM", lEncoder.getVelocity());
     SmartDashboard.putNumber("Launcher Current", launcher1.getOutputCurrent());
     SmartDashboard.putNumber("LauncherSetpoint in RPM", setpoint);
-    SmartDashboard.putNumber("Launcher get",launcher1.get());
+    SmartDashboard.putNumber("Launcher get", launcher1.get());
   }
-
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if(Math.abs(setpoint)>=Math.abs(getController().getSetpoint())){
-      setpoint=(getController().getSetpoint()*10.0/9.0);
-      if(setpoint>=this.setpoint-100&&setpoint<=this.setpoint+100){
-        setpoint=this.setpoint;
+    if (Math.abs(setpoint) >= Math.abs(getController().getSetpoint())) {
+      setpoint = (getController().getSetpoint() * 10.0 / 9.0);
+      if (setpoint >= this.setpoint - 100 && setpoint <= this.setpoint + 100) {
+        setpoint = this.setpoint;
       }
-    }
-    else if(Math.abs(setpoint)<Math.abs(getController().getSetpoint())){
-      setpoint=(getController().getSetpoint()*0.9);
-      if(setpoint>=this.setpoint-100&&setpoint<=this.setpoint+100){
+    } else if (Math.abs(setpoint) < Math.abs(getController().getSetpoint())) {
+      setpoint = (getController().getSetpoint() * 0.9);
+      if (setpoint >= this.setpoint - 100 && setpoint <= this.setpoint + 100) {
         setpoint=this.setpoint;
       }
     }

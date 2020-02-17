@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -73,7 +75,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

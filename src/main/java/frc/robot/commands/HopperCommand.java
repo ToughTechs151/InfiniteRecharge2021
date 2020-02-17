@@ -52,6 +52,7 @@ public class HopperCommand extends CommandBase {
     addRequirements(hopperSubsystem);
     time=new Timer();
     auto=true;
+    coDrive=new Joystick(3);
 }
 
 

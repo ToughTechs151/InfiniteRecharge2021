@@ -24,6 +24,7 @@ public class DriveSoloCommand extends CommandBase{
     
     public DriveSoloCommand(DriveSubsystem drive,LimeLightSubsystem lime,double x,double y,double z){
         this.drive=drive;
+        this.drive.driveTrain.feedWatchdog();
         this.lime=lime;
         left=x;
         right=y;
@@ -32,10 +33,11 @@ public class DriveSoloCommand extends CommandBase{
         this.drive.driveTrain.feedWatchdog();
     }
     public void execute(){
+        this.drive.driveTrain.feedWatchdog();
         firstTime = Timer.getFPGATimestamp();
         SmartDashboard.putNumber("Timing outside of execute", firstTime - lastTime);
         this.drive.driveTrain.feedWatchdog();
-        float Kp=-0.075f;
+        float Kp=-0.0125f;
         leftAdjust=left;
         rightAdjust=right;
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
@@ -49,18 +51,20 @@ public class DriveSoloCommand extends CommandBase{
         }
         this.drive.driveTrain.feedWatchdog();
         drive.drive(leftAdjust,rightAdjust);
-        if(lime.returnD()>=z-10&&lime.returnD()<=z+10){
+        if(lime.returnD()>=z){
             fin=true;
+            
+            drive.drive(0, 0);
         }
         this.drive.driveTrain.feedWatchdog();
         lastTime = timer.getFPGATimestamp();
         SmartDashboard.putNumber("Timing within execute", lastTime - firstTime);
     }
     public boolean isFinished(){
-        this.drive.driveTrain.feedWatchdog();
         return fin;
     }
     public void end(boolean interrupted){
+        drive.drive(0.0, 0.0);
 
     }
 

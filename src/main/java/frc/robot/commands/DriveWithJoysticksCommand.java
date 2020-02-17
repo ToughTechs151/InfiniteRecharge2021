@@ -45,7 +45,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    if(m_driver.getRawButton(Constants.RIGHT_BUMPER)||coDriver.getRawButton(Constants.A)){
+    if(m_driver.getRawButton(Constants.LEFT_BUMPER)||coDriver.getRawButton(Constants.A)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
       prevState=true;
     }
@@ -53,7 +53,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
       if(prevState){
         timer.schedule(new TimerTask(){
           public void run(){
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
           }
         }, 1000);
         prevState=false;

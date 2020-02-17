@@ -20,7 +20,7 @@ public final class Constants {
     @Log
     public static double PORT_HEIGHT=86.75;
     @Log
-    public static final double ANGLE=7;
+    public static final double ANGLE=14;
     @Log
     public static final double CAM_HEIGHT=9.25;
     //joystick ports

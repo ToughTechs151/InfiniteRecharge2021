@@ -18,6 +18,10 @@ public class LimeLightSubsystem extends SubsystemBase{
 
 
     }
+    public void periodic(){
+        dashBoard();
+    }
+
     public void dashBoard(){
         
         //read values periodically

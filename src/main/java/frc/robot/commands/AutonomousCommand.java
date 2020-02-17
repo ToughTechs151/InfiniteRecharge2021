@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.fasterxml.jackson.databind.deser.std.PrimitiveArrayDeserializers;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +20,8 @@ public class AutonomousCommand extends CommandGroupBase {
    private LimeLightSubsystem lime;
    private HopperSubsystem hopperSubsystem;
    private DriveSoloCommand solo;
+   private CommandGroupBase auto;
+   private boolean done=false;
    public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {
       this.drive = drive;
       this.launcherSubsystem = launcherSubsystem;
@@ -26,7 +31,8 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(launcherSubsystem);
       addRequirements(lime);
       addRequirements(hopperSubsystem);
-      addCommands(new DriveSoloCommand(drive, lime, 0.9, 0.9, 180),new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
+      solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 140);
+      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }
 
    public void inititialize(){
@@ -34,7 +40,12 @@ public class AutonomousCommand extends CommandGroupBase {
 
    @Override
    public void addCommands(Command... commands) {
-      sequence(commands);
+      auto=sequence(commands);
+   }
+   public void execute(){
+      if(!done)
+      auto.schedule();
+      done=true;
    }
 
  }

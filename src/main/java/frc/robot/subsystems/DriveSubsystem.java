@@ -65,7 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
     double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
-    float Kp=-0.05f;
+    float Kp=-0.025f;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     //checks for input from drive to allign to target.
     if(oi.getRawButton(Constants.LEFT_BUMPER) ? true : false)
@@ -78,13 +78,13 @@ public class DriveSubsystem extends SubsystemBase {
     }
     //leftDrive=leftDrive/Math.abs(leftDrive)*Math.pow(leftDrive,2);
     //rightDrive=Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive));
-    if(leftDrive>0)
+    if(deadzone(leftDrive)>0)
       leftDrive=(1-mechDeadband)/Math.pow(1-softwareDeadband,2)*Math.pow(leftDrive-softwareDeadband, 2)+mechDeadband;
-    else if(leftDrive<0)
+    else if(deadzone(leftDrive)<0)
       leftDrive=(-1+mechDeadband)/Math.pow(-1+softwareDeadband,2)*Math.pow(leftDrive+softwareDeadband, 2)-mechDeadband;
-    if(rightDrive>0)
+    if(deadzone(rightDrive)>0)
     rightDrive=(1-mechDeadband)/Math.pow(1-softwareDeadband,2)*Math.pow(rightDrive-softwareDeadband, 2)+mechDeadband;
-    else if(rightDrive<0)
+    else if(deadzone(rightDrive)<0)
     rightDrive=(-1+mechDeadband)/Math.pow(-1+softwareDeadband,2)*Math.pow(rightDrive+softwareDeadband, 2)-mechDeadband;
     drive(leftDrive * speedMultiplier, rightDrive * speedMultiplier);
   }
