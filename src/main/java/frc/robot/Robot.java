@@ -88,6 +88,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
   }
 
   @Override

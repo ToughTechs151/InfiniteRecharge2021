@@ -19,7 +19,6 @@ public class DriveWithJoysticksCommand extends CommandBase {
   private final Joystick m_driver;
   private Joystick coDriver;
   private Timer timer;
-  private TimerTask task;
   private boolean prevState=false;
   /**
    * The command for driving the robot during teleop
@@ -47,6 +46,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
   public void execute() {
     if(m_driver.getRawButton(Constants.LEFT_BUMPER)||coDriver.getRawButton(Constants.A)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
       prevState=true;
     }
     else{
@@ -54,6 +54,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
         timer.schedule(new TimerTask(){
           public void run(){
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
           }
         }, 1000);
         prevState=false;

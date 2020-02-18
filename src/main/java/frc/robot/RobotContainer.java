@@ -83,11 +83,11 @@ public class RobotContainer {
     launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI, Constants.LAUNCHERKD);
     mLauncherSubsystem = new LauncherSubsystem(launcherPID);
     mIntakeSubsystem = new IntakeSubsystem();
-    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.35);
+    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.45);
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
-    reverseIntake= new IntakeCommand(mIntakeSubsystem, 0.35);
+    reverseIntake= new IntakeCommand(mIntakeSubsystem, 0.45);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
-    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, new DefaultDrive(m_driveSubsystem));
+    CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, m_DriveWithJoysticksCommand);
   }
 
   /**
@@ -109,7 +109,7 @@ public class RobotContainer {
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-    // RIGHT_BUMPERc.whenHeld(m_hopperCommand);
+     RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
     JoystickButton A = new JoystickButton(driverOI, 1);
