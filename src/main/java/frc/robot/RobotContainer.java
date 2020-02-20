@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import frc.robot.commands.AdjustLauncherCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
@@ -20,16 +21,12 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PDPSubsystem;
 import frc.robot.commands.IntakeCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.shuffleboard.*;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -49,7 +46,7 @@ public class RobotContainer {
   private  DriveWithJoysticksCommand m_DriveWithJoysticksCommand;
   public  HopperSubsystem m_hopperSubsystem;
   private  HopperCommand m_hopperCommand;
-  
+  private PDPSubsystem pdp;
   public static PIDController launcherPID;
   private LauncherSubsystem mLauncherSubsystem;
   public IntakeSubsystem mIntakeSubsystem;
@@ -76,7 +73,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     m_driveSubsystem = new DriveSubsystem();
     m_LimeLightSubsystem = new LimeLightSubsystem();
-    m_DriveWithJoysticksCommand = new DriveWithJoysticksCommand(m_driveSubsystem, driverOI, m_LimeLightSubsystem,coDriverOI);
+    m_DriveWithJoysticksCommand = new DriveWithJoysticksCommand(m_driveSubsystem, driverOI, m_LimeLightSubsystem,
+        coDriverOI);
     m_hopperSubsystem = new HopperSubsystem();
     m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0, coDriverOI);
 
@@ -85,9 +83,10 @@ public class RobotContainer {
     mIntakeSubsystem = new IntakeSubsystem();
     feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.45);
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
-    reverseIntake= new IntakeCommand(mIntakeSubsystem, 0.45);
+    reverseIntake = new IntakeCommand(mIntakeSubsystem, 0.45);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, m_DriveWithJoysticksCommand);
+    pdp=new PDPSubsystem();
   }
 
   /**
@@ -109,7 +108,7 @@ public class RobotContainer {
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-     RIGHT_BUMPERc.whenHeld(m_hopperCommand);
+    RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
     JoystickButton A = new JoystickButton(driverOI, 1);
@@ -129,10 +128,12 @@ public class RobotContainer {
   public static PIDController getPidController() {
     return launcherPID;
   }
-  public Command getHopperCommand(){
+
+  public Command getHopperCommand() {
     return m_hopperCommand;
   }
-  public Command getAutonomousCommand(){
+
+  public Command getAutonomousCommand() {
     return AUTO;
   }
 }

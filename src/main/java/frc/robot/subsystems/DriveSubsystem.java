@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveSubsystem extends SubsystemBase {
   // Drive motors
+  private PowerDistributionPanel pdp;
   private WPI_VictorSPX frontRight;
   private WPI_VictorSPX backRight;
   private WPI_VictorSPX frontLeft;
@@ -62,6 +64,12 @@ public class DriveSubsystem extends SubsystemBase {
     driveTrain.tankDrive(x, y);
   }
 
+  public void periodic(){
+    //for(int c=0;c<1;c++){
+    //  SmartDashboard.putNumber("Port "+0, pdp.getCurrent(0));
+    //}
+  }
+
   /**
    * A set of instructions to interpret input
    * 
@@ -88,16 +96,16 @@ public class DriveSubsystem extends SubsystemBase {
     // leftDrive=leftDrive/Math.abs(leftDrive)*Math.pow(leftDrive,2);
     // rightDrive=Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive));
     
-    if (deadzone(leftDrive) > 0)
+    if (deadzone(leftDrive) > 0.95)
       leftDrive*=leftBackward;
       //leftDrive = (1 - mechDeadband) / Math.pow(1 - softwareDeadband, 2) * Math.pow(leftDrive - softwareDeadband, 2)+ mechDeadband;
-    else if (deadzone(leftDrive) < 0)
+    else if (deadzone(leftDrive) < -0.95)
       leftDrive*=leftForward;
       //leftDrive = (-1 + mechDeadband) / Math.pow(-1 + softwareDeadband, 2) * Math.pow(leftDrive + softwareDeadband, 2)- mechDeadband;
-    if (deadzone(rightDrive) > 0)
+    if (deadzone(rightDrive) > 0.95)
       rightDrive*=rightBackward;
       //rightDrive = (1 - mechDeadband) / Math.pow(1 - softwareDeadband, 2) * Math.pow(rightDrive - softwareDeadband, 2)+ mechDeadband;
-    else if (deadzone(rightDrive) < 0)
+    else if (deadzone(rightDrive) < -0.95)
       rightDrive*=rightForward;
       //rightDrive = (-1 + mechDeadband) / Math.pow(-1 + softwareDeadband, 2) * Math.pow(rightDrive + softwareDeadband, 2)- mechDeadband;
     // */
