@@ -80,8 +80,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
-    double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y));
-    double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y));
+    double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
+    double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
     float Kp = -0.025f;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     // checks for input from drive to allign to target.
@@ -96,16 +96,16 @@ public class DriveSubsystem extends SubsystemBase {
     // leftDrive=leftDrive/Math.abs(leftDrive)*Math.pow(leftDrive,2);
     // rightDrive=Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive));
     
-    if (deadzone(leftDrive) > 0.95)
+    if (deadzone(leftDrive) > 0.875)
       leftDrive*=leftBackward;
       //leftDrive = (1 - mechDeadband) / Math.pow(1 - softwareDeadband, 2) * Math.pow(leftDrive - softwareDeadband, 2)+ mechDeadband;
-    else if (deadzone(leftDrive) < -0.95)
+    else if (deadzone(leftDrive) < -0.875)
       leftDrive*=leftForward;
       //leftDrive = (-1 + mechDeadband) / Math.pow(-1 + softwareDeadband, 2) * Math.pow(leftDrive + softwareDeadband, 2)- mechDeadband;
-    if (deadzone(rightDrive) > 0.95)
+    if (deadzone(rightDrive) > 0.875)
       rightDrive*=rightBackward;
       //rightDrive = (1 - mechDeadband) / Math.pow(1 - softwareDeadband, 2) * Math.pow(rightDrive - softwareDeadband, 2)+ mechDeadband;
-    else if (deadzone(rightDrive) < -0.95)
+    else if (deadzone(rightDrive) < -0.875)
       rightDrive*=rightForward;
       //rightDrive = (-1 + mechDeadband) / Math.pow(-1 + softwareDeadband, 2) * Math.pow(rightDrive + softwareDeadband, 2)- mechDeadband;
     // */
@@ -121,6 +121,12 @@ public class DriveSubsystem extends SubsystemBase {
   private static double deadzone(double val) {
     if (Math.abs(val) > softwareDeadband && Math.abs(val) < mechDeadband) {
       val*=mechDeadband/Math.abs(val);
+    }
+    else if(val>1){
+      val=1;
+    }
+    else if(val<-1){
+      val=-1;
     }
     return Math.abs(val) > softwareDeadband ? val : 0;
 }

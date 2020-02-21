@@ -51,7 +51,12 @@ public class DriveSoloCommand extends CommandBase{
         }
         
         
-        if(lime.returnD()>=z){
+        if(lime.returnD()>=z&&left>0){
+            fin=true;
+            
+            drive.drive(0, 0);
+        }
+        else if(lime.returnD()<=z&&left<0){
             fin=true;
             
             drive.drive(0, 0);

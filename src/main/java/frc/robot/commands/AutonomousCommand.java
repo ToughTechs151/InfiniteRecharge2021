@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import com.fasterxml.jackson.databind.deser.std.PrimitiveArrayDeserializers;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
@@ -22,8 +23,8 @@ public class AutonomousCommand extends CommandGroupBase {
    private DriveSoloCommand solo;
    private CommandGroupBase auto;
    private boolean done=false;
-   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {
-      this.drive = drive;
+   private Timer time=new Timer();
+   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {      this.drive = drive;
       this.launcherSubsystem = launcherSubsystem;
       this.lime=lime;
       this.hopperSubsystem=hopperSubsystem;
@@ -32,7 +33,7 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(lime);
       addRequirements(hopperSubsystem);
       solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 140);
-      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
+      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),new DriveSoloCommand(drive, lime, 1, 1, 150),new DriveSoloCommand(drive, lime, -1, -1, 140));
    }
 
    public void inititialize(){
@@ -43,9 +44,10 @@ public class AutonomousCommand extends CommandGroupBase {
       auto=sequence(commands);
    }
    public void execute(){
-      if(!done)
-      auto.schedule();
-      done=true;
+      if(!done){
+         auto.schedule();
+         done=true;
+      }
    }
    public boolean isFinished(){
       return done;

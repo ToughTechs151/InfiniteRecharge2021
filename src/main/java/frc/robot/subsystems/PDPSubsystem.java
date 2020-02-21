@@ -13,6 +13,7 @@ public class PDPSubsystem extends SubsystemBase{
     private boolean active=true;
     public PDPSubsystem(){
         pdp=new PowerDistributionPanel();
+        time=new Timer();
     }
     public void periodic(){
         if(active){

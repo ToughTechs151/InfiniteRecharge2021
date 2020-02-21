@@ -75,7 +75,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     
-    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
