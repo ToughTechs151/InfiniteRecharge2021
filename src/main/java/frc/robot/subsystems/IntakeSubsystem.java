@@ -21,10 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private WPI_TalonSRX intake;
-  private WPI_TalonSRX deploy;
-  private Encoder deployEncoder;
   private TalonSRXConfiguration intakeSettings;
-  private double startPoint;
   
   public IntakeSubsystem() {
     deploy=new WPI_TalonSRX(Constants.INTAKEDEPLOY);
@@ -37,6 +34,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeSettings.continuousCurrentLimit=3;
     intakeSettings.peakCurrentDuration=0;
     intake.configAllSettings(intakeSettings);
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
   public boolean deployIntake(int direction){
     if(Math.abs(deployEncoder.getDistance())<3.5){
