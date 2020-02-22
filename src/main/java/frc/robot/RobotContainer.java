@@ -81,7 +81,7 @@ public class RobotContainer {
     launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI, Constants.LAUNCHERKD);
     mLauncherSubsystem = new LauncherSubsystem(launcherPID);
     mIntakeSubsystem = new IntakeSubsystem();
-    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.45);
+    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.55);
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
     reverseIntake = new IntakeCommand(mIntakeSubsystem, 0.45);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);

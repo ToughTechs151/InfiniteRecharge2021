@@ -32,8 +32,8 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(launcherSubsystem);
       addRequirements(lime);
       addRequirements(hopperSubsystem);
-      solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 140);
-      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),new DriveSoloCommand(drive, lime, 1, 1, 150),new DriveSoloCommand(drive, lime, -1, -1, 140));
+      solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 240);
+      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),new DriveSoloCommand(drive, lime, 1, 1, 250),new DriveSoloCommand(drive, lime, -1, -1, 240));
    }
 
    public void inititialize(){
@@ -53,7 +53,7 @@ public class AutonomousCommand extends CommandGroupBase {
       return done;
    }
    public void end(boolean interrupted){
-      
+      done=false;
    }
 
  }

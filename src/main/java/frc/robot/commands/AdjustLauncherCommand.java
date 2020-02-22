@@ -37,7 +37,7 @@ public class AdjustLauncherCommand extends CommandBase {
      * @param speed the distance
      */
     public void changeSpeed(double speed){
-        setspeed =335*Math.pow(speed+93,0.404);
+        setspeed =335*Math.pow(speed,0.404);
     }
     /**
      * called when the command is scheduled
@@ -70,5 +70,6 @@ public class AdjustLauncherCommand extends CommandBase {
     }
     @Override
     public void end(boolean interrupted) {
+        time.cancel();
     }
 }

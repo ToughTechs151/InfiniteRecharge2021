@@ -37,18 +37,18 @@ public class DriveSoloCommand extends CommandBase{
         firstTime = Timer.getFPGATimestamp();
         SmartDashboard.putNumber("Timing outside of execute", firstTime - lastTime);
         
-        float Kp=-0.0125f;
+        float Kp=0.1f;
         leftAdjust=left;
         rightAdjust=right;
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         //checks for input from drive to allign to target.
-        if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0)==1){
-          double heading_error = tx;
-          double steering_adjust = Kp * tx;
-
-          leftAdjust+=steering_adjust;
-          rightAdjust-=steering_adjust;
-        }
+        //if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0)==1){
+            double steering_adjust = Kp * tx;
+            steering_adjust= DriveSubsystem.deadzone(steering_adjust) > 0.3 ? 0.3 : DriveSubsystem.deadzone(steering_adjust);
+            steering_adjust= DriveSubsystem.deadzone(steering_adjust) > -0.3 ? DriveSubsystem.deadzone(steering_adjust) : -0.3;
+            leftAdjust+=steering_adjust;
+            rightAdjust-=steering_adjust;
+        //}
         
         
         if(lime.returnD()>=z&&left>0){

@@ -68,7 +68,7 @@ public final class Constants {
   @Log
   public static double LAUNCHERKI=0.00032;
   @Log
-  public static double LAUNCHERKD=0.00000003;
+  public static double LAUNCHERKD=0.000000003;
   @Log
   public static double HOPPER_SPEED = 1;
   @Config

@@ -16,8 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The subsystem for the main drivetrain
  */
 public class DriveSubsystem extends SubsystemBase {
-  // Drive motors
-  private PowerDistributionPanel pdp;
   private WPI_VictorSPX frontRight;
   private WPI_VictorSPX backRight;
   private WPI_VictorSPX frontLeft;
@@ -61,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param y right wheels
    */
   public void drive(double x, double y) {
-    driveTrain.tankDrive(x, y);
+    driveTrain.tankDrive(deadzone(x),deadzone(y));
   }
 
   public void periodic(){
@@ -80,21 +78,20 @@ public class DriveSubsystem extends SubsystemBase {
 
     speedMultiplier = oi.getRawButton(Constants.RIGHT_BUMPER) ? crawl : normal;
 
-    double leftDrive = deadzone(oi.getRawAxis(Constants.LEFT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
-    double rightDrive = deadzone(oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
-    float Kp = -0.025f;
+    double leftDrive = deadzone(Math.sqrt(0.6)*oi.getRawAxis(Constants.LEFT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
+    double rightDrive = deadzone(Math.sqrt(0.6)*oi.getRawAxis(Constants.RIGHT_JOYSTICK_Y)+oi.getRawAxis(3)-oi.getRawAxis(2));
+    double Kp = 0.25;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     // checks for input from drive to allign to target.
-    if (oi.getRawButton(Constants.LEFT_BUMPER) ? true : false)
-      if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1) {
-        double heading_error = tx;
+    if (oi.getRawButton(Constants.LEFT_BUMPER)){
+      //if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1) {
         double steering_adjust = Kp * tx;
-
-        leftDrive += steering_adjust;
-        rightDrive -= steering_adjust;
-      }
-    // leftDrive=leftDrive/Math.abs(leftDrive)*Math.pow(leftDrive,2);
-    // rightDrive=Math.pow(rightDrive ,2)*(rightDrive/Math.abs(rightDrive));
+        steering_adjust=steering_adjust < 0.3 ? steering_adjust : 0.3;
+        steering_adjust=steering_adjust > -0.3 ? steering_adjust : -0.3;
+        leftDrive -= steering_adjust;
+        rightDrive +=steering_adjust;
+      //}
+    }
     
     if (deadzone(leftDrive) > 0.875)
       leftDrive*=leftBackward;
@@ -118,7 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
    * 
    * @param val The input of the joystick
    */
-  private static double deadzone(double val) {
+  public static double deadzone(double val) {
     if (Math.abs(val) > softwareDeadband && Math.abs(val) < mechDeadband) {
       val*=mechDeadband/Math.abs(val);
     }

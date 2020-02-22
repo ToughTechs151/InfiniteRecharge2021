@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,9 +20,15 @@ public class IntakeSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private WPI_TalonSRX intake;
+  private TalonSRXConfiguration intakeSettings;
   
   public IntakeSubsystem() {
     intake=new WPI_TalonSRX(Constants.INTAKE);
+    intakeSettings=new TalonSRXConfiguration();
+    intakeSettings.peakCurrentLimit= 3;
+    intakeSettings.continuousCurrentLimit=3;
+    intakeSettings.peakCurrentDuration=0;
+    intake.configAllSettings(intakeSettings);
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }

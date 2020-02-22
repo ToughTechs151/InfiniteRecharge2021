@@ -103,7 +103,7 @@ public class HopperCommand extends CommandBase {
         }
       
       //check for intent to launch or if there is a ball to intake without forcing into the launcher
-      else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState()&&m_hopperSubsystem.getHopperSwitch2())){
+      else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState())){
         m_hopperSubsystem.start(speed);
       }
     }
