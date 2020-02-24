@@ -21,6 +21,7 @@ import frc.robot.subsystems.HopperSubsystem;
  * Command to feed Launcher
  */
 public class HopperCommand extends CommandBase {
+  private boolean fin=false;
   private HopperSubsystem m_hopperSubsystem;
   private Joystick coDrive = new Joystick(9);
   private Timer time;
@@ -101,10 +102,19 @@ public class HopperCommand extends CommandBase {
         if(!m_hopperSubsystem.getHopperSwitch2()){
 
         }
-      
       //check for intent to launch or if there is a ball to intake without forcing into the launcher
       else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState())){
         m_hopperSubsystem.start(speed);
+      }
+      if(auto){
+        time.schedule(new TimerTask(){
+
+          @Override
+          public void run() {
+            fin=true;
+
+          }
+        }, 5000);
       }
     }
   }
@@ -118,6 +128,6 @@ public class HopperCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return fin;
   }
 }

@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSoloCommand extends CommandBase{
     private DriveSubsystem drive;
     private LimeLightSubsystem lime;
-    private double left,right,z;
-    private boolean fin=false;
+    private double left,right,z,startZ;
+    private boolean fin=false,first=true;
     private double leftAdjust,rightAdjust;
     private double lastTime = 0;
     private double firstTime = 0;
@@ -28,7 +28,8 @@ public class DriveSoloCommand extends CommandBase{
         this.lime=lime;
         left=x;
         right=y;
-        this.z=z;
+        startZ=lime.returnD();
+        this.z=startZ+z;
         addRequirements(drive);
         
     }

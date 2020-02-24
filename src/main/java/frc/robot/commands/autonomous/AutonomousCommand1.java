@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,22 +9,31 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.commands.AdjustLauncherCommand;
+import frc.robot.commands.ChangeLauncherSpeedCommand;
+import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DriveSoloCommand;
+import frc.robot.commands.HopperCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
-public class AutonomousCommand extends CommandGroupBase {
-   private DriveSubsystem drive;
-   private LauncherSubsystem launcherSubsystem;
-   private LimeLightSubsystem lime;
-   private HopperSubsystem hopperSubsystem;
-   private DriveSoloCommand solo;
-   private CommandGroupBase auto;
-   private boolean done=false;
-   private Timer time=new Timer();
-   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {      this.drive = drive;
+public class AutonomousCommand1 extends CommandGroupBase {
+    private DriveSubsystem drive;
+    private LauncherSubsystem launcherSubsystem;
+    private LimeLightSubsystem lime;
+    private HopperSubsystem hopperSubsystem;
+    private DefaultDrive solo;
+    private CommandGroupBase auto;
+    private boolean done = false;
+    private Timer time = new Timer();
+
+    public AutonomousCommand1(DriveSubsystem drive, LauncherSubsystem launcherSubsystem, LimeLightSubsystem lime,
+            HopperSubsystem hopperSubsystem) {
+        this.drive = drive;
       this.launcherSubsystem = launcherSubsystem;
       this.lime=lime;
       this.hopperSubsystem=hopperSubsystem;
@@ -32,8 +41,10 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(launcherSubsystem);
       addRequirements(lime);
       addRequirements(hopperSubsystem);
-      solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 240);
-      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),new DriveSoloCommand(drive, lime, 1, 1, 250),new DriveSoloCommand(drive, lime, -1, -1, 240));
+      solo=new DefaultDrive(drive,0.5);
+      addCommands(new ChangeLauncherSpeedCommand(2950,launcherSubsystem),new WaitCommand(2),
+                new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),
+                solo,new WaitCommand(1),new DefaultDrive(drive, 0));
    }
 
    public void inititialize(){

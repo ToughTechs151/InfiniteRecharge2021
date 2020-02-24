@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import frc.robot.commands.AdjustLauncherCommand;
-import frc.robot.commands.AutonomousCommand;
+import frc.robot.commands.autonomous.*;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveWithJoysticksCommand;
@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -36,6 +38,7 @@ import io.github.oblarg.oblog.Logger;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private SendableChooser<Command> chooser=new SendableChooser<>();
   // OI joysticks 
   
   public  Joystick driverOI;
@@ -54,6 +57,7 @@ public class RobotContainer {
   private IntakeCommand stopIntakeCommand;
   private IntakeCommand reverseIntake;
   private AutonomousCommand AUTO;
+  private AutonomousCommand1 AUTO1;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -85,8 +89,11 @@ public class RobotContainer {
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
     reverseIntake = new IntakeCommand(mIntakeSubsystem, 0.45);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
+    AUTO1 = new AutonomousCommand1(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, m_DriveWithJoysticksCommand);
-    pdp=new PDPSubsystem();
+    chooser.addOption("limeLight disabled", AUTO1);
+    chooser.addOption("limeLight enabled", AUTO);
+    SmartDashboard.putData("Autonomous mode:",chooser);
   }
 
   /**
@@ -134,6 +141,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return AUTO;
+    return chooser.getSelected();
   }
 }

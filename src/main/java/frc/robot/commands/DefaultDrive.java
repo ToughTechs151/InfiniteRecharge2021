@@ -4,18 +4,20 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class DefaultDrive extends CommandBase{
     private DriveSubsystem drive;
-    public DefaultDrive(DriveSubsystem drive){
+    private double speed;
+    public DefaultDrive(DriveSubsystem drive, double speed){
         this.drive=drive;
+        this.speed=speed;
         addRequirements(drive);
     }
     @Override
     public void execute() {
         
-        drive.drive(0, 0);
+        drive.drive(speed, speed);
     }
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
     public void execute(boolean interrupted){
 
