@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -16,6 +18,7 @@ import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
+import frc.robot.commands.DeployIntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
@@ -25,6 +28,7 @@ import frc.robot.subsystems.PDPSubsystem;
 import frc.robot.commands.IntakeCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -115,7 +119,7 @@ public class RobotContainer {
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-    RIGHT_BUMPERc.whenHeld(m_hopperCommand);
+    //RIGHT_BUMPERc.whenHeld(m_hopperCommand);
     JoystickButton BACK = new JoystickButton(driverOI, 7);
     JoystickButton START = new JoystickButton(driverOI, 8);
     JoystickButton A = new JoystickButton(driverOI, 1);
@@ -124,6 +128,32 @@ public class RobotContainer {
     B.whenPressed(stopIntakeCommand);
     JoystickButton X = new JoystickButton(driverOI, 3);
     X.whenPressed(reverseIntake);
+    Button dPadRight=new Button(){
+      @Override
+      public boolean get(){
+        return driverOI.getPOV(0)==90;
+      }
+    };
+    Button dPadLeft=new Button(){
+      @Override
+      public boolean get(){
+        return driverOI.getPOV(0)==270;
+      }
+    };
+    Button dPadDown=new Button(){
+      @Override
+      public boolean get(){
+        return driverOI.getPOV(0)==180;
+      }
+    };
+    Button dPadUp=new Button(){
+      @Override
+      public boolean get(){
+        return driverOI.getPOV(0)==0||driverOI.getPOV(0)==360;
+      }
+    };
+    dPadRight.whenPressed(new DeployIntakeCommand(mIntakeSubsystem, 1));
+    dPadLeft.whenPressed(new DeployIntakeCommand(mIntakeSubsystem, -1));
 
   }
 

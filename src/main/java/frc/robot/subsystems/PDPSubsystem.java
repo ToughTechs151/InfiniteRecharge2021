@@ -25,6 +25,7 @@ public class PDPSubsystem extends SubsystemBase{
 				    for(int c=0;c<16;c++){
                         SmartDashboard.putNumber("Channel "+c, pdp.getCurrent(c));
                     }
+                    SmartDashboard.putNumber("PDP amp draw", pdp.getTotalCurrent());
                     active=true;
 			    }
 

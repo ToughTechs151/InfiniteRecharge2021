@@ -47,14 +47,18 @@ public final class Constants {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
+  // DIO
   public static final int HSWITCH=0;
   public static final int HSWITCH2 = 3;
+  public static final int INTAKE1 = 5;
+  public static final int INTAKE2 = 6;
   //PWM PORTS
   
 
   //CAN IDs
   //Sequence RIO 1 3 5 6 11 12 14 15 
   public static final int INTAKE = 1;
+  public static final int INTAKEDEPLOY=2;
   public static final int HOPPER = 3;
   public static final int LAUNCHER1 = 5;
   public static final int LAUNCHER2 = 6;

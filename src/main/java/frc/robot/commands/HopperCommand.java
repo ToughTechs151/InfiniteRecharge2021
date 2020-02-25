@@ -25,7 +25,6 @@ public class HopperCommand extends CommandBase {
   private HopperSubsystem m_hopperSubsystem;
   private Joystick coDrive = new Joystick(9);
   private Timer time;
-  private TimerTask task;
   private boolean prevState=true;
   private double speed;
   private boolean auto=false;
@@ -60,7 +59,7 @@ public class HopperCommand extends CommandBase {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    SmartDashboard.putBoolean("gothere", false);
   }
 
   /**
@@ -68,24 +67,27 @@ public class HopperCommand extends CommandBase {
    */
   @Override
   public void execute() {
-    if(!auto&&coDrive.getRawButton(Constants.LEFT_BUMPER)){
-      if(!m_hopperSubsystem.getHopperSwitch2()){
-        m_hopperSubsystem.start(0-speed);
-      }
-      else 
+    if(coDrive.getRawButton(Constants.LEFT_BUMPER)){
+      if(m_hopperSubsystem.getHopperSwitch2()){
         m_hopperSubsystem.stop();
+        SmartDashboard.putBoolean("gothere", true);
+      }
+      else{
+        m_hopperSubsystem.start(-speed);
+        SmartDashboard.putBoolean("gothere", true);
+      }
     }
-    else{
+    else if (!coDrive.getRawButton(Constants.LEFT_BUMPER)){
       //check for ready ball and command to launch
       if(auto||(coDrive.getRawButton(Constants.RIGHT_BUMPER)&&!m_hopperSubsystem.getHopperSwitch2())){
         if(prevState){
           prevState=false;
           m_hopperSubsystem.stop();
-          time.schedule(task=new TimerTask(){
+          time.schedule(new TimerTask(){
             @Override
             public void run() {
               m_hopperSubsystem.start(speed);
-              time.schedule(task=new TimerTask(){
+              time.schedule(new TimerTask(){
                 @Override
                 public void run() {
                   
@@ -97,7 +99,7 @@ public class HopperCommand extends CommandBase {
         }
       }
       //check to see if the hopper should stop
-      else if((!coDrive.getRawButton(Constants.RIGHT_BUMPER)&&m_hopperSubsystem.getHopperSwitchState())||!m_hopperSubsystem.getHopperSwitch2())
+      else if(!m_hopperSubsystem.getHopperSwitch2())
         m_hopperSubsystem.stop();
         if(!m_hopperSubsystem.getHopperSwitch2()){
 
