@@ -21,6 +21,9 @@ public class IntakeSubsystem extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private WPI_TalonSRX intake;
+  private WPI_TalonSRX deploy;
+  private Encoder deployEncoder;
+  private double startPoint;
   private TalonSRXConfiguration intakeSettings;
   
   public IntakeSubsystem() {
