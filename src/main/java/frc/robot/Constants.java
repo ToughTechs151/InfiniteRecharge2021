@@ -63,6 +63,7 @@ public final class Constants {
   public static final int HOPPER = 3;
   public static final int LAUNCHER1 = 5;
   public static final int LAUNCHER2 = 6;
+  public static final int HANGER = 7;
   public static final int FRONT_RIGHT = 14;
   public static final int BACK_RIGHT = 15;
   public static final int FRONT_LEFT = 11;

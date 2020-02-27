@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AdjustLauncherCommand;
 import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DriveWithJoysticksCommand;
+import frc.robot.commands.HangPullCommand;
+import frc.robot.commands.HangReachCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeHomeCommand;
@@ -29,6 +31,7 @@ import frc.robot.commands.autonomous.AutonomousCommand;
 import frc.robot.commands.autonomous.AutonomousCommand1;
 import frc.robot.commands.DeployIntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.HangSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
@@ -71,6 +74,7 @@ public class RobotContainer {
   private AutonomousCommand AUTO;
   private AutonomousCommand1 AUTO1;
   private IntakeHomeCommand home;
+  private HangSubsystem mhang;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -104,6 +108,7 @@ public class RobotContainer {
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
     AUTO1 = new AutonomousCommand1(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
     home=new IntakeHomeCommand(mIntakeSubsystem);
+    mhang=new HangSubsystem();
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, m_DriveWithJoysticksCommand);
     chooser.addOption("limeLight disabled", AUTO1);
     chooser.addOption("limeLight enabled", AUTO);
@@ -166,6 +171,8 @@ public class RobotContainer {
     };
     dPadRight.whenPressed(new DeployIntakeCommand(mIntakeSubsystem, 1));
     dPadLeft.whenPressed(new DeployIntakeCommand(mIntakeSubsystem, -1));
+    dPadUp.whenPressed(new HangReachCommand(mhang));
+    dPadDown.whenPressed(new HangPullCommand(mhang));
 
   }
 
