@@ -24,6 +24,7 @@ import frc.robot.commands.ChangeLauncherSpeedCommand;
 import frc.robot.commands.DriveWithJoysticksCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeHomeCommand;
 import frc.robot.commands.autonomous.AutonomousCommand;
 import frc.robot.commands.autonomous.AutonomousCommand1;
 import frc.robot.commands.DeployIntakeCommand;
@@ -69,6 +70,7 @@ public class RobotContainer {
   private IntakeCommand reverseIntake;
   private AutonomousCommand AUTO;
   private AutonomousCommand1 AUTO1;
+  private IntakeHomeCommand home;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -91,16 +93,17 @@ public class RobotContainer {
     m_DriveWithJoysticksCommand = new DriveWithJoysticksCommand(m_driveSubsystem, driverOI, m_LimeLightSubsystem,
         coDriverOI);
     m_hopperSubsystem = new HopperSubsystem();
-    m_hopperCommand = new HopperCommand(m_hopperSubsystem, 1.0, coDriverOI);
+    m_hopperCommand = new HopperCommand(m_hopperSubsystem, .90, coDriverOI);
 
     launcherPID = new PIDController(Constants.LAUNCHERKP, Constants.LAUNCHERKI, Constants.LAUNCHERKD);
     mLauncherSubsystem = new LauncherSubsystem(launcherPID);
     mIntakeSubsystem = new IntakeSubsystem();
-    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.55);
+    feedIntakeCommand = new IntakeCommand(mIntakeSubsystem, -0.3);
     stopIntakeCommand = new IntakeCommand(mIntakeSubsystem, 0);
-    reverseIntake = new IntakeCommand(mIntakeSubsystem, 0.45);
+    reverseIntake = new IntakeCommand(mIntakeSubsystem, 0.3);
     AUTO = new AutonomousCommand(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
     AUTO1 = new AutonomousCommand1(m_driveSubsystem, mLauncherSubsystem, m_LimeLightSubsystem, m_hopperSubsystem);
+    home=new IntakeHomeCommand(mIntakeSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(m_driveSubsystem, m_DriveWithJoysticksCommand);
     chooser.addOption("limeLight disabled", AUTO1);
     chooser.addOption("limeLight enabled", AUTO);
@@ -120,9 +123,9 @@ public class RobotContainer {
     JoystickButton Bc = new JoystickButton(coDriverOI, 2);
     Bc.whenPressed(new ChangeLauncherSpeedCommand(0, mLauncherSubsystem));
     JoystickButton Xc = new JoystickButton(coDriverOI, 3);
-    Xc.whenPressed(new ChangeLauncherSpeedCommand(2950, mLauncherSubsystem));// 2950
+    Xc.whenPressed(new ChangeLauncherSpeedCommand(2750, mLauncherSubsystem));// 2950
     JoystickButton Yc = new JoystickButton(coDriverOI, 4);
-    Yc.whenPressed(new ChangeLauncherSpeedCommand(3750, mLauncherSubsystem));// 3750
+    Yc.whenPressed(new ChangeLauncherSpeedCommand(3000,mLauncherSubsystem));// 3750
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
     JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
@@ -135,6 +138,8 @@ public class RobotContainer {
     B.whenPressed(stopIntakeCommand);
     JoystickButton X = new JoystickButton(driverOI, 3);
     X.whenPressed(reverseIntake);
+    JoystickButton Y = new JoystickButton(driverOI, 4);
+    Y.whenPressed(home);
     Button dPadRight=new Button(){
       @Override
       public boolean get(){
@@ -179,5 +184,11 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return chooser.getSelected();
+  }
+  public Command getHomeCommand(){
+    return home;
+  }
+  public Command getStopIntakeCommand(){
+    return stopIntakeCommand;
   }
 }

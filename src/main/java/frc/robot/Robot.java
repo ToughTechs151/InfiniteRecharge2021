@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    //m_robotContainer.getHomeCommand().schedule();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    //m_robotContainer.getHomeCommand().schedule();
     if (m_driveCommand != null){
       m_driveCommand.schedule();
     }

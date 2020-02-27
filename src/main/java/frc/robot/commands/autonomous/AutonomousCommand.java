@@ -29,7 +29,8 @@ public class AutonomousCommand extends CommandGroupBase {
    private CommandGroupBase auto;
    private boolean done=false;
    private Timer time=new Timer();
-   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {      this.drive = drive;
+   public AutonomousCommand(DriveSubsystem drive, LauncherSubsystem launcherSubsystem,LimeLightSubsystem lime, HopperSubsystem hopperSubsystem) {      
+      this.drive = drive;
       this.launcherSubsystem = launcherSubsystem;
       this.lime=lime;
       this.hopperSubsystem=hopperSubsystem;
@@ -38,7 +39,7 @@ public class AutonomousCommand extends CommandGroupBase {
       addRequirements(lime);
       addRequirements(hopperSubsystem);
       solo=new DriveSoloCommand(drive, lime, 0.5, 0.5, 60);
-      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new WaitCommand(1),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED),new DriveSoloCommand(drive, lime, 1, 1, 10),new DriveSoloCommand(drive, lime, -1, -1, -10));
+      addCommands(new ChangeLauncherSpeedCommand(3000,launcherSubsystem),solo,new AdjustLauncherCommand(launcherSubsystem, lime),new WaitCommand(4),new HopperCommand(hopperSubsystem, Constants.HOPPER_SPEED));
    }
 
    public void inititialize(){

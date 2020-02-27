@@ -93,20 +93,22 @@ public class HopperCommand extends CommandBase {
                   
                   prevState=true;
                 }
-              },200);
+              },250);
             }
-          },500);
+          },2000);
         }
       }
       //check to see if the hopper should stop
-      else if(!m_hopperSubsystem.getHopperSwitch2())
+      else if(!m_hopperSubsystem.getHopperSwitch2()){
         m_hopperSubsystem.stop();
-        if(!m_hopperSubsystem.getHopperSwitch2()){
-
-        }
+        Robot.m_robotContainer.getStopIntakeCommand().schedule();
+      }
       //check for intent to launch or if there is a ball to intake without forcing into the launcher
       else if((coDrive.getRawButton(Constants.RIGHT_BUMPER))||(!m_hopperSubsystem.getHopperSwitchState())){
         m_hopperSubsystem.start(speed);
+      }
+      else if(m_hopperSubsystem.getHopperSwitchState()) {
+        m_hopperSubsystem.stop();
       }
       if(auto){
         time.schedule(new TimerTask(){

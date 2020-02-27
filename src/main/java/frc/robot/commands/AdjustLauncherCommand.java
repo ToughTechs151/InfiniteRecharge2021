@@ -26,50 +26,62 @@ public class AdjustLauncherCommand extends CommandBase {
     public AdjustLauncherCommand(LauncherSubsystem launcher,LimeLightSubsystem lime) {
         mLauncher=launcher;
         mLime=lime;
+        fin=false;
+        wait=false;
         addRequirements(mLauncher);
         addRequirements(mLime);
     }
     public void initialize(){
-
+        fin=false;
+        wait=false;
     }
     /**
      * changes the input based off of the best fit trendline of data collected
      * @param speed the distance
      */
     public void changeSpeed(double speed){
-        setspeed =1942+4.39*speed-0.000941*Math.pow(speed,2)-0.000000541*Math.pow(speed,3);
+        setspeed =(2921)+(-2.91*speed)+(0.00897*Math.pow(speed,2))+(0.0000196*Math.pow(speed,3));
     }
     /**
      * called when the command is scheduled
      */
     public void execute(){
         if(!wait){
-            changeSpeed(mLime.returnD());
             time.schedule(new TimerTask(){
 
                 @Override
                 public void run() {
-                    wait=true;
+                    changeSpeed(mLime.returnD());
+                    time.schedule(new TimerTask(){
+
+                        @Override
+                        public void run() {
+                            wait=true;
+
+                        }
+                
+                    }, 1500);
+                    mLauncher.setSetpoint(setspeed);
+                    time.schedule(new TimerTask(){
+                        @Override
+                        public void run() {
+                            fin=true;
+                
+                        }
+                    }, 2500);
 
                 }
                 
-            }, 1500);
-            mLauncher.setSetpoint(setspeed);
-            time.schedule(new TimerTask(){
-                @Override
-                public void run() {
-                    fin=true;
-                
-                }
-            }, 2500);
+            }, 1000);
         }
     }
+            
     @Override
     public boolean isFinished() {
         return fin;
     }
     @Override
     public void end(boolean interrupted) {
-        time.cancel();
+        
     }
 }

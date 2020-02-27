@@ -56,7 +56,7 @@ public class DriveWithJoysticksCommand extends CommandBase {
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
           }
-        }, 1000);
+        }, 3000);
         prevState=false;
       }
     }

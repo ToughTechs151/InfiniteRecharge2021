@@ -3,17 +3,22 @@ package frc.robot.commands;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DeployIntakeCommand extends CommandBase{
+public class IntakeHomeCommand extends CommandBase {
     private IntakeSubsystem intake;
-    private int speed;
+    private int speed=1;
     private boolean fin;
-    public  DeployIntakeCommand(IntakeSubsystem subsystem, int speed) {
+
+    public IntakeHomeCommand(IntakeSubsystem subsystem) {
         intake=subsystem;
-        this.speed=speed;
         addRequirements(intake);
     }
     public void execute(){
-        fin=intake.deployIntake(speed);
+        intake.deploy.set(speed*.25);
+        if(!intake.getSwitch()){
+            intake.deploy.set(0);
+            fin=true;
+        }
+        
     }
     @Override
     public boolean isFinished() {
@@ -21,7 +26,7 @@ public class DeployIntakeCommand extends CommandBase{
     }
     @Override
     public void end(boolean interupted){
-        //intake.resetEncoder();
-        
+        intake.resetEncoder();
+        fin=false;
     }
 }

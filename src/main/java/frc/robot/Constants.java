@@ -50,8 +50,9 @@ public final class Constants {
   // DIO
   public static final int HSWITCH=0;
   public static final int HSWITCH2 = 3;
-  public static final int INTAKE1 = 5;
-  public static final int INTAKE2 = 6;
+  public static final int ISWITCH = 7;
+  public static final int INTAKE1 = 8;
+  public static final int INTAKE2 = 9;
   //PWM PORTS
   
 
