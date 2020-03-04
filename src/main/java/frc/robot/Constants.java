@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import io.github.oblarg.oblog.annotations.*;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,10 +17,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-    public static final double PORT_HEIGHT=89.75;
-    public static final double ANGLE=12;
-    public static final double CAM_HEIGHT=15;
+    @Log
+    public static double PORT_HEIGHT=86.75;
+    @Log
+    public static final double ANGLE=14;
+    @Log
+    public static final double CAM_HEIGHT=9.25;
     //joystick ports
     public static final int A = 1;
     public static final int B = 2;
@@ -44,22 +47,51 @@ public final class Constants {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
-  public static final int hSwitch=0;
+  // DIO
+  public static final int HSWITCH=0;
+  public static final int HSWITCH2 = 3;
+  public static final int ISWITCH = 7;
+  public static final int INTAKE1 = 8;
+  public static final int INTAKE2 = 9;
   //PWM PORTS
-  public static final int FRONT_RIGHT = 2;
-  public static final int BACK_RIGHT = 3;
-  public static final int FRONT_LEFT = 4;
-  public static final int BACK_LEFT = 6;
+  
 
   //CAN IDs
-  public static final int hopper = 7;
-  public static final int Launcher1 = 5;
-  public static final int Launcher2 = 6;
-
+  //Sequence RIO 1 3 5 6 11 12 14 15 
+  public static final int INTAKE = 1;
+  public static final int INTAKEDEPLOY=2;
+  public static final int HOPPER = 3;
+  public static final int LAUNCHER1 = 5;
+  public static final int LAUNCHER2 = 6;
+  public static final int HANGER = 7;
+  public static final int FRONT_RIGHT = 14;
+  public static final int BACK_RIGHT = 15;
+  public static final int FRONT_LEFT = 11;
+  public static final int BACK_LEFT = 12;
   //Final Variables
-  public static final double Kp=0.0003;
-  public static final double Ki=0.00028;
-  public static final double Kd=0;
-
+  @Log
+  public static double LAUNCHERKP=0.0003;
+  @Log
+  public static double LAUNCHERKI=0.00032;
+  @Log
+  public static double LAUNCHERKD=0.000000003;
+  @Log
+  public static double HOPPER_SPEED = 1;
+  @Config
+  public void setLAUNCHERKP(double value){
+    LAUNCHERKP=value;
+  }
+  @Config
+  public void setLAUNCHERKI(double value){
+    LAUNCHERKI=value;
+  }
+  @Config
+  public void setLAUNCHERKD(double value){
+    LAUNCHERKD=value;
+  }
+  @Config
+  public void setHOPPER_SPEED(double value){
+    HOPPER_SPEED=value;
+  }
 }
 

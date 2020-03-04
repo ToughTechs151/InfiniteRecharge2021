@@ -15,81 +15,90 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
- * 
+ * Launcher subsystem
  */
 public class LauncherSubsystem extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static PIDController pid;
-  private static CANSparkMax launcher1 = new CANSparkMax(Constants.Launcher1,MotorType.kBrushless);
-  private static CANSparkMax launcher2 = new CANSparkMax(Constants.Launcher2,MotorType.kBrushless);
+  private static CANSparkMax launcher1 = new CANSparkMax(Constants.LAUNCHER1, MotorType.kBrushless);
+  private static CANSparkMax launcher2 = new CANSparkMax(Constants.LAUNCHER2, MotorType.kBrushless);
   private static CANEncoder lEncoder = new CANEncoder(launcher1);
   //private static Talon launcher1 = new Talon(Constants.Launcher1);
   //private static Talon launcher2 = new Talon(Constants.Launcher2);
-  private static double setpoint = 0;
+  private double setpoint = 0;
   private static SpeedControllerGroup launcher = new SpeedControllerGroup(launcher1, launcher2);
+
+  /**
+   * constructs the launcher subsystem
+   * 
+   * @param inPID the pid controller for the launcher
+   */
   public LauncherSubsystem(PIDController inPID) {
     super(inPID);
     launcher.setInverted(false);
   }
-  public void setSetpoint(double set){
-    setpoint=set;
-    if(set!=0){
-      try {
-        getController().setSetpoint(setpoint);
-      } 
-      catch (NullPointerException Exception) {
-        System.out.println("Exception: " + Exception);
-        //TODO: handle exception
-      }
+
+  /**
+   * Sets the setpoint for the pid controller
+   * 
+   * @param set
+   */
+  public void setSetpoint(double set) {
+    setpoint = set;
+    if (set != 0) {
+      getController().setSetpoint(setpoint);
     }
   }
 
+  /**
+   * runs periodically when enabled
+   */
   public void periodic() {
-    //setSetpoint(RobotContainer.coDriverOI.getY()); NEVER EVER DO THIS
+    // setSetpoint(RobotContainer.coDriverOI.getY()); NEVER EVER DO THIS
     useOutput(lEncoder.getVelocity(), setpoint);
     SmartDashboard.putNumber("LauncherSpeed in RPM", lEncoder.getVelocity());
     SmartDashboard.putNumber("Launcher Current", launcher1.getOutputCurrent());
-    //setSetpoint(SmartDashboard.getNumber("LauncherSetpoint in RPM", setpoint));
     SmartDashboard.putNumber("LauncherSetpoint in RPM", setpoint);
-    /*getController().setP(SmartDashboard.getNumber("Kp", getController().getP()));
-    getController().setI(SmartDashboard.getNumber("Ki", getController().getI()));
-    getController().setD(SmartDashboard.getNumber("Kd", getController().getD()));
-    SmartDashboard.putNumber("Kp", getController().getP());
-    SmartDashboard.putNumber("Ki", getController().getI());
-    SmartDashboard.putNumber("Kd", getController().getD());*/
-    SmartDashboard.putNumber("Launcher get",launcher1.get());
+    SmartDashboard.putNumber("Launcher get", launcher1.get());
   }
 
-  /*protected static void run(double output) {
-    if (setpoint==0){
-      output=setpoint;
+  @Override
+  protected void useOutput(double output, double setpoint) {
+    if (Math.abs(setpoint) >= Math.abs(getController().getSetpoint())) {
+      setpoint = (getController().getSetpoint() * 10.0 / 9.0);
+      if (setpoint >= this.setpoint - 100 && setpoint <= this.setpoint + 100) {
+        setpoint = this.setpoint;
+      }
+    } else if (Math.abs(setpoint) < Math.abs(getController().getSetpoint())) {
+      setpoint = (getController().getSetpoint() * 0.9);
+      if (setpoint >= this.setpoint - 100 && setpoint <= this.setpoint + 100) {
+        setpoint=this.setpoint;
+      }
     }
-    launcher.set(output);
-
-  }*/
-@Override
-protected void useOutput(double output, double setpoint) {
-  if(setpoint == 0){
-    setpoint=(getController().getSetpoint()*0.9);
-  }
-  output=getController().calculate(output,setpoint)/lEncoder.getVelocityConversionFactor();
-  launcher1.set(output*0.95);
-  launcher2.set(output);
+    output=getController().calculate(output,setpoint)/lEncoder.getVelocityConversionFactor();
+    launcher1.set(output*0.95);
+    launcher2.set(output);
 	
-}
-@Override
-protected double getMeasurement() {
-	return launcher.get();
-}
-public static void setSpeed(double s){
-  launcher.set(s/lEncoder.getVelocityConversionFactor());
+  }
+  @Override
+  protected double getMeasurement() {
+	  return launcher.get();
+  }
+  /**
+   * sets the launcher speed
+   * @param s the speed to change to
+   */
+  public static void setSpeed(double s){
+    launcher.set(s/lEncoder.getVelocityConversionFactor());
 
-}
+  }
 }

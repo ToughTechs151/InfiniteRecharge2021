@@ -7,11 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.Splash;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -22,6 +24,8 @@ public class Robot extends TimedRobot {
  // public Command m_autonomousCommand;
   public static RobotContainer m_robotContainer;
   public Command m_driveCommand;
+  public Command m_hopperCommand;
+  public Command m_autonomousCommand;
 
 
   /**
@@ -33,6 +37,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    Splash.printAllStatusFiles();
     
   }
 
@@ -57,6 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
   @Override
@@ -68,12 +74,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
- /*   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    //m_robotContainer.getHomeCommand().schedule();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }*/
+    }
   }
 
   /**
@@ -81,18 +89,24 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
   }
 
   @Override
   public void teleopInit() {
+    m_hopperCommand = m_robotContainer.getHopperCommand();
     m_driveCommand = m_robotContainer.getDriveCommand();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    //m_robotContainer.getHomeCommand().schedule();
     if (m_driveCommand != null){
       m_driveCommand.schedule();
     }
+    if (m_hopperCommand!=null)
+      m_hopperCommand.schedule();
+    
   }
 
   /**
