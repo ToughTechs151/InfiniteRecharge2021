@@ -8,15 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -28,7 +23,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class LauncherSubsystem extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private static PIDController pid;
   private static CANSparkMax launcher1 = new CANSparkMax(Constants.LAUNCHER1, MotorType.kBrushless);
   private static CANSparkMax launcher2 = new CANSparkMax(Constants.LAUNCHER2, MotorType.kBrushless);
   private static CANEncoder lEncoder = new CANEncoder(launcher1);

@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -36,14 +34,6 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.PDPSubsystem;
-import frc.robot.commands.IntakeCommand;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -64,7 +54,6 @@ public class RobotContainer {
   private  DriveWithJoysticksCommand m_DriveWithJoysticksCommand;
   public  HopperSubsystem m_hopperSubsystem;
   private  HopperCommand m_hopperCommand;
-  private PDPSubsystem pdp;
   public static PIDController launcherPID;
   private LauncherSubsystem mLauncherSubsystem;
   public IntakeSubsystem mIntakeSubsystem;
@@ -133,10 +122,6 @@ public class RobotContainer {
     Yc.whenPressed(new ChangeLauncherSpeedCommand(3000,mLauncherSubsystem));// 3750
     JoystickButton LEFT_BUMPERc = new JoystickButton(coDriverOI, 5);
     LEFT_BUMPERc.whenHeld(new ChangeLauncherSpeedCommand(-500, mLauncherSubsystem));
-    JoystickButton RIGHT_BUMPERc = new JoystickButton(coDriverOI, 6);
-    //RIGHT_BUMPERc.whenHeld(m_hopperCommand);
-    JoystickButton BACK = new JoystickButton(driverOI, 7);
-    JoystickButton START = new JoystickButton(driverOI, 8);
     JoystickButton A = new JoystickButton(driverOI, 1);
     A.whenPressed(feedIntakeCommand);
     JoystickButton B = new JoystickButton(driverOI, 2);
